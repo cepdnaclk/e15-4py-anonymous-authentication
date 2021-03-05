@@ -39,9 +39,9 @@ title:
 
 ## Related works
 
-Methodology
-3.1 Cryptographic Primitives
-3.1.1 Zero Knowledge Proof
+## Methodology
+### 3.1 Cryptographic Primitives
+#### 3.1.1 Zero Knowledge Proof
 Zero knowledge Proof (ZKP) is a protocol that allows a prover to prove the possession
 of some secret to a verifier without revealing the secret or any information related to
 the secret. The first idea of ZKP was introduced by Shafi Goldwasser, Silvio Micali, and
@@ -57,7 +57,7 @@ There are two types of zero knowledge systems; interactive zero knowledge proofs
 and non-interactive zero knowledge proofs [35]. Our proposed protocol uses a zkp that
 utilize quadratic residues in modular arithmetic.
 
-3.1.2 Ring Signatures
+#### 3.1.2 Ring Signatures
 The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Shamir and
 Yael Tauman Kalai in [36]. Ring signatures are used to digitally sign messages on behalf
 of a group. At the same time, makes it computationally difficult to find the exact signer.
@@ -78,7 +78,7 @@ ring signature. No one outside the group (without a secret key Si) can generate 
 ring signature for the same group.
 
 
-3.1.3 Shamir’s Secret Sharing
+#### 3.1.3 Shamir’s Secret Sharing
 In 1979 Adi Shamir introduced the concept of Shamir’s secret sharing[7][How to Share a
 Secret]. This allows a secret to be divided into n parts. The secret can be reconstructed
 with atleast t parts where (1 ≤ t ≤ n). No knowledge about the secret can be learnt
@@ -116,8 +116,8 @@ Therefore keys need to be broken into parts and distributed among multiple peers
 peer should be able to reconstruct a key without the knowledge of all the parts. [9], [26]
 are p2p anonymous authentication mechanisms that use the concept of Shamir’s secret
 sharing.
-3.2 Conceptual design
-3.2.1 P2P network design
+### 3.2 Conceptual design
+#### 3.2.1 P2P network design
 Using the .Net framework we implemented a hybrid P2P network[42]. A traditional
 hybrid peer to peer network consists of peers and super peers. Hybrid P2P systems is
 a combination of purely distributed P2P systems and mediated P2P systems. Hybrid
@@ -140,10 +140,9 @@ existing super peers.
 A super peer is only responsible for nodes under his scope and does not know any
 information regarding other peers of the system. Therefore a node discovery process
 becomes an exhaustive task. This can be accomplished in two ways; flooding search and
-3.2 Conceptual design 11
 random walk. We utilize flooding search in this project since the random walk is not
 guaranteed to produce results[44].
-3.2.2 Distributed Certificate Management
+#### 3.2.2 Distributed Certificate Management
 The decentralized environment of the P2P network does not allow traditional methods
 of authentication. It’s difficult to maintain a centralized database of certificates where
 the availability of peers cannot be predicted. Distributing certificates among super peers
@@ -155,8 +154,8 @@ algorithm. The idea is to break the certificates into multiple parts and distrib
 the P2P network. When needed, the certificates can be reconstructed from a minimal
 subset of the parts. A more detailed explanation of the implementation is given in section
 3.3.1 .
-3.2.3 Proposed Authentication Schemes
-Ring Signature Based approach
+#### 3.2.3 Proposed Authentication Schemes
+##### Ring Signature Based approach
 The characteristics of ring signatures make it an interesting primitive in obtaining
 anonymous authentication. Ring signatures allows a message to be signed by a group of
 public keys. Making it impossible to identify the exact signer. The original ring signature
@@ -172,12 +171,11 @@ Authenticated key sharing based approach
 We propose a novel authentication mechanism that allows a peer to authenticate without
 revealing their identity. The basic idea of the protocol is to present prover a set of public
 keys and challenge to prove the knowledge of atleast one secret key corresponding to
-3.3 Methodological approach 12
 a public key from the set. This idea is simple but the protocol should not reveal any
 information related to the prover’s identity. Also a prover without a valid key pair should
 not be able to authenticate himself. To accomplish that we employ a authenticated key
 sharing scheme introduced in [45].
-Zero Knowledge Proof Based Approach
+##### Zero Knowledge Proof Based Approach
 Zkp is a popular approach to obtain anonymous authentication in p2p networks. This
 technique has been utilized in [24], [25] and [10]. Many of these approaches relies on
 pseudonyms to hide the identity. We propose a new authentication protocol that uses
@@ -189,8 +187,8 @@ set of public keys. However unlike previous method, we use zero knowledge proofs
 that. Therefore this method achieve k anonymity
 
 
-3.3 Methodological approach
-3.3.1 Distributed Certificate Management
+### 3.3 Methodological approach
+#### 3.3.1 Distributed Certificate Management
 During the initial interaction of a peer, the corresponding super peer obtains the peer’s
 certificate. The super peer breaks the certificate into n parts using Shamir’s algorithm.
 The super peer then floods these parts across the network. Once a request to recreate
@@ -207,8 +205,8 @@ identify n and r for each certificate.
 n and r are performance metrics. Increasing n will increase the average key storage
 size in super peers. In section 6 we analyze the performance of increasing r while n is
 kept as a constant.
-3.3 Methodological approach 13
-3.3.2 Proposed Authentication Schemes
+
+#### 3.3.2 Proposed Authentication Schemes
 Ring Signature Based approach
 The protocol starts by the prover collecting a set of certificates from the super peer.
 Prover then randomly select a subset of the certificates. Then he verify the authenticity
@@ -246,170 +244,220 @@ key. Then challenge prover to decrypt this and send R back. If the prover genera
 the correct K at the previous steps, he will be able to decrypt R. Therefore prover can
 successfully authenticate himself. Otherwise verifier sends a fail message.
 
+Authenticated key sharing based approach
+As same as the previous approach prover collects a set of certificates from the super
+peer. Then randomly select a subset out of them. After verifying the authenticity of the
+certificates prover extract the corresponding public keys. Prover mix his certificate into
+the subset of certificates and send them to the verifier. Verifier obtains the public keys
+after verifying the authenticity of the certificates. Then generate X = g
+x by selecting a
+random x. Then use the set of public keys to encrypt X. Thus creating a set of ciphertexts
+where each corresponds to a different public key from the set. Since one of the public
+key is prover’s, he will be able decrypt X with his secret key. After decrypting X, prover
+selects a random y and calculates Y = g
+y
+. Then generate K = Xy
+. K is the shared key.
+Then he sends Y to the verifier encrypted with verifier’s public key. Verifier decrypts Y.
+Then compute K = Y
+x
+. At this stage both parties have the same shared key K. Verifier
+encrypts a random number R using a symmetric key encryption scheme using K as the
+key. Then challenge prover to decrypt this and send R back. If the prover generated
+the correct K at the previous steps, he will be able to decrypt R. Therefore prover can
+successfully authenticate himself. Otherwise verifier sends a fail message.
 
- \subsubsection{Authenticated key sharing based approach}
- 
- As same as the previous approach prover collects a set of certificates from the super peer. Then randomly select a subset out of them. After verifying the authenticity of the certificates prover extract the corresponding public keys. Prover mix his certificate into the subset of certificates and send them to the verifier. Verifier obtains the public keys after verifying the authenticity of the certificates. Then generate $X = g^x$ by selecting a random x. Then use the set of public keys to encrypt X. Thus creating a set of ciphertexts where each corresponds to a different public key from the set. Since one of the public key is prover's, he will be able decrypt X with his secret key. After decrypting X, prover selects a random y and calculates $Y = g^y$. Then generate $K = X^y$. K is the shared key. Then he sends Y to the verifier encrypted with verifier's public key. Verifier decrypts Y. Then compute $K = Y^x$. At this stage both parties have the same shared key K. Verifier encrypts a random number R using a symmetric key encryption scheme using K as the key. Then challenge prover to decrypt this and send R back. If the prover generated the correct K at the previous steps, he will be able to decrypt R. Therefore prover can successfully authenticate himself. Otherwise verifier sends a fail message. 
-
-\subsubsection{Zero Knowledge Proof Based Approach}
-
-As same as the above two methods prover collects k certificates from the super peer. Then randomly select n-1 certificates and create $C$ and $P$ vectors as the above methods. However in this method public key is $A_u = g^{a_u} mod p$ where $a_u$ is the private key. Similar to Schnorr's protocol prover generates U. The difference is U contains factors of $A_i^{v_i}$ where $v_i$ is a random number. This is generated only using the collected public keys (Prover's public key is not in U). Prover then send U to the verifier. Verifier sends a challenge c to the prover. Prover xor all elements of $v_i$ with c to obtain $v_p$. Then mix $v_p$ among the set of $v_i$ s and send them along with the set of public keys (including prover's public key) to the verifier. Prover also sends r which is $s - a_pv_p mod p$. Then prover does two steps of verification. First he xor $v_i$ s and check if it's equal to c. If it is not terminate the authentication. Otherwise generate $U^{\prime}$ using r, A and $v_i$ s. If $U = U^{\prime}$ authentication is successful. Otherwise sends a fail message to the prover. A more detailed explanation is given in section 4.1.3 . 
+Zero Knowledge Proof Based Approach
+As same as the above two methods prover collects k certificates from the super peer.
+Then randomly select n-1 certificates and create C and P vectors as the above methods.
+However in this method public key is Au = g
+aumodp where au is the private key. Similar
+to Schnorr’s protocol prover generates U. The difference is U contains factors of A
+vi
+i where
+vi
+is a random number. This is generated only using the collected public keys (Prover’s
+public key is not in U). Prover then send U to the verifier. Verifier sends a challenge c to
+the prover. Prover xor all elements of vi with c to obtain vp. Then mix vp among the set
+of vi s and send them along with the set of public keys (including prover’s public key)
+to the verifier. Prover also sends r which is s − apvpmodp. Then prover does two steps
+of verification. First he xor vi s and check if it’s equal to c. If it is not terminate the
+authentication. Otherwise generate U
+′ using r, A and vi s. If U = U
+′ authentication is
+successful. Otherwise sends a fail message to the prover. A more detailed explanation is
+given in section 4.1.3 . 
 
 
 ## Experiment Setup and Implementation
 
-\chapter{Experimental Setup and Implementation}
-
-\section{Proposed Schemes}
-
-\subsection{Ring Signature Based approach}
- 
-  \subsubsection{Registration}
-  
-  \begin{enumerate}
-  \item A user has an ID which can be anything related to the identity of the user. Selects a random number $r_u$. Then generate a public key $P_u$ such that
-
-\[P_u = H1(ID, r_u)\]
-
-User then generates the private key $S_u$ corresponding to $P_u$
-
-User sends the registration request along with his ID, $P_u$ to the main server. 
-
-    \item Main server verifies the identity of the user. Then the server signs $P_u$ with his private key $S_s$ to generate $Cert_u$. Then sends $Cert_u$ to the user.
-
-\end{enumerate}
- 
- 
- \subsubsection{Authentication} 
- 
- \begin{enumerate}
-  \item Prover collects k certificates from the super peer. Then randomly selects n-1 certificates from the the set. After verifying the authenticity of the selected certificates prover generates $C = \{Cert_1, Cert_2,.., Cert_n\}$ which includes prover's certificate $Cert_p$ as well. Prover then obtain each corresponding public key from the certificates to generate $P = \{P_1, P_2,.., P_n\}$. Then send C to the verifier, encrypted with verifier's public key $P_v$. 
-  
-  \item Verifier decrypts the message to obtain C. After verifying the authenticity of each $Cert_i$, verifier generates each $P_i$ using main servers public key $P_s$. Then generate $H = Hash(P)$. Then sends H and a random nonce N to the prover.
-  
-  \item Prover generate $H^{\prime} = Hash(P)$ and if $H \neq H^{\prime}$ terminate the authentication. Otherwise use his secret key $S_p$, P and $P_s$ to sign N and generate ring signature $\sigma$ using \cite{Dennis} ring signature scheme. Then send $\sigma$ to the verifier, encrypted with verifier's public key $P_v$. 
-  
-  \item Verifier decrypts the message to obtain $\sigma$. Then verify whether $\sigma$ corresponds to N using P set of public keys (obtained in step 2). If the verification is success prover is successfully authenticated. Otherwise verifier sends a fail message.
-  
-  
-\end{enumerate}
-
-\subsection{Authenticated key sharing based approach}
-
-  \subsubsection{Registration} 
-  
-   \begin{enumerate}
-  \item A user has an ID which can be anything related to the identity of the user. Selects a public $r_u$. Then generate
-
-\[P_u = H1(ID, r_u)\]
-
-    $P_u$ is the public key of the user.
-User then generates the private key $S_u$ corresponding to $P_u$
-
-User sends the registration request along with his ID, $P_u$ to the main server. 
-
-    \item Main server verifies the identity of the user. Then the server signs $P_u$ with his private key $S_s$ to generate $Cert_u$. Then sends $Cert_u$ to the user.
-
-\end{enumerate}
- 
- \subsubsection{Authentication} 
-
-\begin{enumerate}
-  \item  Prover collects k certificates from the super peer. Then randomly selects n-1 certificates from the the set. After verifying the authenticity of the selected certificates prover generates $C = \{Cert_1, Cert_2,.., Cert_n\}$ $\vert$ C includes $Cert_p$ as well. Then send C to the verifier, encrypted with verifier's public key ($P_v$).
-  
-  \item Verifier decrypts P using his secret key ($S_v$). Generate H = Hash(P). Then generate a random number x and obtain X = $g^x$. Then generate n ciphertexts $CT = \{C_1, C_2, ..., C_n\} | C_i =  E_{P_i}(X | H)$. Verifier sends CT to the prover.
-  
-  \item Prover selects the $C_i$ corresponding to his public key. Decrypt it using his secret key ($S_p$) to obtain X and H. Generate $H^{\prime}$ = Hash(P). Check if $H = H^{\prime}$. If not terminate the session. Otherwise select a random number y to generate Y = $g^y$.  Then compute K = $X^y$. Prover sends Y back to the verifier encrypted with $P_v$.
-  
-  \item Verifier decrypts Y. Compute K = $Y^x$. Then generate another random number R, generate $E1_K(R)$. E1(.) is a symmetric key encryption scheme. Then generate $H1 = Hash( R \vert K )$. Then send $E1_k(R)$ and H1 to the prover.
-
-  
-  \item Prover decrypts the message with his knowledge of K to obtain R. Then use R and his K to generate $H1^{\prime} = Hash( R \vert K )$. If $H1 = H1^{\prime}$, prover sends R back to the verifier. Otherwise terminate the authentication session.
-  
-  \item Authentication is successful if the verifier obtains the same R. If not verifier sends a fail message to the prover.
-\end{enumerate}
-
-\subsection{Zero Knowledge Proof Based Approach}
-
-\subsubsection{Setup}
-
-\begin{enumerate}
-    \item P and Q are two large prime number where P-1 \vert Q. g is a generator of a cyclic group of $Z_P^*$ where order of the group is  Q. P, Q and g are group parameters. 
-\end{enumerate}
-
- 
- 
- \subsubsection{Registration} 
-   
-\begin{enumerate}
-  \item A user has an ID which can be anything related to the identity of the user. Selects a random integer  $r_u$. Then generate $a_u$
-
-\[a_u = H1(ID, r_u)\]
-
-    such that $a_u$ is from [0, Q-1]. $a_u$ is the private key of the user.
-Then to generate the public key $A_u$ user calculates
-
-                    \[A_u = g^{a_u} mod p\]
-
-User sends the registration request along with his ID, $A_u$  to the main server. 
-
-
-    \item Main server verifies the identity of the user. Then the server signs $A_u$ with his private key $K_s$ to generate $Cert_u$. Then sends $Cert_u$ to the user.
-
-\end{enumerate}
-
- 
-\subsubsection{Authentication} 
-
-
-\begin{enumerate}
-
-    \item Prover collects k certificates from the super peer. Then randomly selects n-1 certificates from the the set. After verifying the authenticity of the selected certificates prover generates $C = \{Cert_1, Cert_2,.., Cert_{n-1}\}$. Prover then obtain each corresponding public key from the certificates to generate $P=\{A_1, A_2, …  A_{n-1}\}$. Prover then selects a random number s from the range [0, Q-1].  Then selects another n-1 random numbers from the range [0, Q-1] to generate the $V=\{v_1, v_2, …, v_{n-1}\}$. Prover calculates
-    
-     \[U = g^s A^{v_1} A^{v_2} … A^{v_{n-1}}\]
-     
-     Prover sends U to the verifier to initiate the authentication.
-     
-     \item Verifier selects a random number c from the range [0, Q-1] and sends it to the prover.
-     
-     \item Prover calculates
-     
-    \[v_p = v_1 \oplus v_2 \oplus …  v_{n-1} \oplus c\] 
-
-    Then insert $v_p$ to the vector V such that $V=\{v_1, … v_p, … v_{n-1}\}$. Prover also update $C=\{Cert_1, ..., Cert_p, ..., Cert_{n-1}\}$ where  $Cert_p$ is prover's certificate. Then calculates
-
-                \[r = s - a_pv_p mod p\]
-
-    Prover sends r, V, C to the verifier.
-    
-    \item After verifying the authenticity of the certificates in C. Verifier calculates
-    
-            \[c^{\prime} = v_1 \oplus v_2 \oplus  … \oplus v_n\]
-
-    If $c \neq c^{\prime}$, terminate the authentication session. Otherwise calculates
-    
-            \[U^{\prime} = g^r A^{v_1} A^{v_2} … A^{v_n}\]
-
-    If $U = U^{\prime}$, authentication is successful. Otherwise terminate the authentication. 
-    
-\end{enumerate}
-
-
-\section{Testing}
-
-Testing of the system was done to understand the capabilities of the system. The testing was done cloud servers located in different countries. Intention was to mimic a world wide distributed network. Although a simulation environment would be ideal to do load testing on the system, absence of open-source platforms to simulate network environments which could run c sharp scripts was a problem. However, a real-world environment helps to understand the system performance in its operating environment. The tests were done to find the limitations of key sharing mechanism and to compare the performance of the three authentication protocols in a real environment. 
-
+### 4.1 Proposed Schemes
+#### 4.1.1 Ring Signature Based approach
+##### Registration
+1. A user has an ID which can be anything related to the identity of the user. Selects
+a random number ru. Then generate a public key Pu such that
+Pu = H1(ID, ru)
+User then generates the private key Su corresponding to Pu
+User sends the registration request along with his ID, Pu to the main server.
+2. Main server verifies the identity of the user. Then the server signs Pu with his
+private key Ss to generate Certu. Then sends Certu to the user.
+##### Authentication
+1. Prover collects k certificates from the super peer. Then randomly selects n-1
+certificates from the the set. After verifying the authenticity of the selected
+certificates prover generates C = {Cert1, Cert2, .., Certn} which includes prover’s
+certificate Certp as well. Prover then obtain each corresponding public key from the
+4.1 Proposed Schemes 16
+certificates to generate P = {P1, P2, .., Pn}. Then send C to the verifier, encrypted
+with verifier’s public key Pv.
+2. Verifier decrypts the message to obtain C. After verifying the authenticity of each
+Certi
+, verifier generates each Pi using main servers public key Ps. Then generate
+H = Hash(P). Then sends H and a random nonce N to the prover.
+3. Prover generate H′ = Hash(P) and if H ̸= H′
+terminate the authentication.
+Otherwise use his secret key Sp, P and Ps to sign N and generate ring signature
+σ using [40] ring signature scheme. Then send σ to the verifier, encrypted with
+verifier’s public key Pv.
+4. Verifier decrypts the message to obtain σ. Then verify whether σ corresponds to N
+using P set of public keys (obtained in step 2). If the verification is success prover
+is successfully authenticated. Otherwise verifier sends a fail message.
+#### 4.1.2 Authenticated key sharing based approach
+##### Registration
+1. A user has an ID which can be anything related to the identity of the user. Selects
+a public ru. Then generate
+Pu = H1(ID, ru)
+Pu is the public key of the user. User then generates the private key Su corresponding
+to Pu
+User sends the registration request along with his ID, Pu to the main server.
+2. Main server verifies the identity of the user. Then the server signs Pu with his
+private key Ss to generate Certu. Then sends Certu to the user.
+##### Authentication
+1. Prover collects k certificates from the super peer. Then randomly selects n-1
+certificates from the the set. After verifying the authenticity of the selected
+certificates prover generates C = {Cert1, Cert2, .., Certn} | C includes Certp as
+well. Then send C to the verifier, encrypted with verifier’s public key (Pv).
+2. Verifier decrypts P using his secret key (Sv). Generate H = Hash(P). Then
+generate a random number x and obtain X = g
+x
+. Then generate n ciphertexts
+CT = {C1, C2, ..., Cn}|Ci = EPi
+(X|H). Verifier sends CT to the prover.
+3. Prover selects the Ci corresponding to his public key. Decrypt it using his secret
+key (Sp) to obtain X and H. Generate H′ = Hash(P). Check if H = H′
+. If not
+terminate the session. Otherwise select a random number y to generate Y = g
+y
+.
+Then compute K = Xy
+. Prover sends Y back to the verifier encrypted with Pv.
+4. Verifier decrypts Y. Compute K = Y
+x
+. Then generate another random number R,
+generate E1K(R). E1(.) is a symmetric key encryption scheme. Then generate
+H1 = Hash(R|K). Then send E1k(R) and H1 to the prover.
+5. Prover decrypts the message with his knowledge of K to obtain R. Then use R and
+his K to generate H1
+′ = Hash(R|K). If H1 = H1
+′
+, prover sends R back to the
+verifier. Otherwise terminate the authentication session.
+6. Authentication is successful if the verifier obtains the same R. If not verifier sends
+a fail message to the prover.
+#### 4.1.3 Zero Knowledge Proof Based Approach
+##### Setup
+1. P and Q are two large prime number where P-1 |Q.gisageneratorof acyclicgroupofZ
+∗
+P
+where order of the group is Q. P, Q and g are group parameters.
+##### Registration
+1. A user has an ID which can be anything related to the identity of the user. Selects
+a random integer ru. Then generate au
+au = H1(ID, ru)
+such that au is from [0, Q-1]. au is the private key of the user. Then to generate
+the public key Au user calculates
+Au = g
+aumodp
+User sends the registration request along with his ID, Au to the main server.
+2. Main server verifies the identity of the user. Then the server signs Au with his
+private key Ks to generate Certu. Then sends Certu to the user.
+##### Authentication
+1. Prover collects k certificates from the super peer. Then randomly selects n-1
+certificates from the the set. After verifying the authenticity of the selected certificates prover generates C = {Cert1, Cert2, .., Certn−1}. Prover then obtain each
+corresponding public key from the certificates to generate P = {A1, A2, . . . An−1}.
+Prover then selects a random number s from the range [0, Q-1]. Then selects another
+n-1 random numbers from the range [0, Q-1] to generate the V = {v1, v2, . . . , vn−1}.
+Prover calculates
+U = g
+sA
+v1A
+v2
+. . . Avn−1
+Prover sends U to the verifier to initiate the authentication.
+2. Verifier selects a random number c from the range [0, Q-1] and sends it to the
+prover.
+3. Prover calculates
+vp = v1 ⊕ v2 ⊕ . . . vn−1 ⊕ c
+Then insert vp to the vector V such that V = {v1, . . . vp, . . . vn−1}. Prover also
+update C = {Cert1, ..., Certp, ..., Certn−1} where Certp is prover’s certificate. Then
+calculates
+r = s − apvpmodp
+Prover sends r, V, C to the verifier.
+4. After verifying the authenticity of the certificates in C. Verifier calculates
+c
+′ = v1 ⊕ v2 ⊕ . . . ⊕ vn
+If c ̸= c
+′
+, terminate the authentication session. Otherwise calculates
+4.2 Testing 19
+U
+′ = g
+rA
+v1A
+v2
+. . . Avn
+If U = U
+′
+, authentication is successful. Otherwise terminate the authentication.
+### 4.2 Testing
+Testing of the system was done to understand the capabilities of the system. The testing
+was done cloud servers located in different countries. Intention was to mimic a world
+wide distributed network. Although a simulation environment would be ideal to do load
+testing on the system, absence of open-source platforms to simulate network environments
+which could run c sharp scripts was a problem. However, a real-world environment helps
+to understand the system performance in its operating environment. The tests were done
+to find the limitations of key sharing mechanism and to compare the performance of the
+three authentication protocols in a real environment.
 The first test was done to understand the performance of the key sharing mechanism.
-
-\subsection{Performance of key sharing}
-
-Key sharing technique is an integral part of our implementation. The number of parts the key can be broken into (n) and the number of parts required to reconstruct a certificate (r) decides the availability of certificates. A high n value and low r value obtains a higher availability. Since distributing the parts of the certificates happens only once, in this experiment we measure the latency of the certificate reconstruction. Specifically, the experiment was done to identify how the latency of a successful certificate reconstruction varies with increasing n and r. The experiment was done by setting n = r. That is all parts of the certificate are required to reconstruct the certificate. First we break a randomly created certificate into n parts and distribute across the P2P network. Then we floods a SEARCH message requesting the parts of the certificate. The time was measured from the time of flooding the SEARCH message until the successful reconstruction of the certificate. We started with breaking the certificate into 2 parts and at each step we increased n by 2. We continued the experiment until n reached 20. For each n the experiment was done three times and we measured the average time. We also removed any outliers that could affect the results.
-
-Due to limited resources, we used only four publicly available servers each in a different country. The selected servers were located in Singapore, India, America and France. Multiple super-node instances were created at each server and super-nodes were connected so that no two neighbour-nodes reside in the same country. This is to intentionally increase the latency of communication.
-
-\subsection{Performance of authentication protocols}
-
-Anonymity of the authentication protocols depend on the number of certificates. Higher the number of certificates used in the protocol higher the anonymity of the prover. Therefore it is important that a protocol can handle a higher number of certificates. This experiment was done to measure the latency of a complete successful authentication session between a prover and a verifier. At each step we increased the number of ceritificates used in the protocol to measure how the latency varies. The experiment was done for the three proposed protocols in hope to compare the performance. 
+4.2.1 Performance of key sharing
+Key sharing technique is an integral part of our implementation. The number of parts the
+key can be broken into (n) and the number of parts required to reconstruct a certificate
+(r) decides the availability of certificates. A high n value and low r value obtains a higher
+availability. Since distributing the parts of the certificates happens only once, in this
+experiment we measure the latency of the certificate reconstruction. Specifically, the
+experiment was done to identify how the latency of a successful certificate reconstruction
+varies with increasing n and r. The experiment was done by setting n = r. That is
+all parts of the certificate are required to reconstruct the certificate. First we break a
+randomly created certificate into n parts and distribute across the P2P network. Then we
+floods a SEARCH message requesting the parts of the certificate. The time was measured
+from the time of flooding the SEARCH message until the successful reconstruction of
+the certificate. We started with breaking the certificate into 2 parts and at each step
+we increased n by 2. We continued the experiment until n reached 20. For each n the
+experiment was done three times and we measured the average time. We also removed
+any outliers that could affect the results.
+Due to limited resources, we used only four publicly available servers each in a
+different country. The selected servers were located in Singapore, India, America and
+France. Multiple super-node instances were created at each server and super-nodes
+4.2 Testing 20
+were connected so that no two neighbour-nodes reside in the same country. This is to
+intentionally increase the latency of communication.
+4.2.2 Performance of authentication protocols
+Anonymity of the authentication protocols depend on the number of certificates. Higher
+the number of certificates used in the protocol higher the anonymity of the prover.
+Therefore it is important that a protocol can handle a higher number of certificates. This
+experiment was done to measure the latency of a complete successful authentication
+session between a prover and a verifier. At each step we increased the number of
+ceritificates used in the protocol to measure how the latency varies. The experiment was
+done for the three proposed protocols in hope to compare the performance.
 
 ## Results and Analysis
 
