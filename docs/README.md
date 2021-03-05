@@ -41,17 +41,117 @@ The concept of Peer to peer (P2P) communication has gained significant attention
 
 We suggest that even in an anonymous network there should be some level of accountability to protect the network and its users. Accountability is achieved through authentication.
 
-To integrate an authentication mechanism into an anonymous P2P environment we need to solve two main challenges.•Authenticate in a decentralized environment.•Authenticate without revealing identity. These two points have been discussed separately since the start of the internet. Each point has its own difficulties and challenges. Authentication needs to tackle problems like the absence of a central server, certificate management in a distributed environment, the semi-trusted nature of peers, the unpredictable availability of peers, etc. Authentication needs to solve problems like not revealing sensitive information about authenticating party's identity, secure against misbehaving parties (cheating verifiers and cheating provers), unlinkability of authentication sessions, practicality, etc.
+To integrate an authentication mechanism into an anonymous P2P environment we need to solve two main challenges.
+•Authenticate in a decentralized environment.
+•Authenticate without revealing identity. 
+These two points have been discussed separately since the start of the internet. Each point has its own difficulties and challenges. Authentication needs to tackle problems like the absence of a central server, certificate management in a distributed environment, the semi-trusted nature of peers, the unpredictable availability of peers, etc. Authentication needs to solve problems like not revealing sensitive information about authenticating party's identity, secure against misbehaving parties (cheating verifiers and cheating provers), unlinkability of authentication sessions, practicality, etc.
 
 In this paper, we propose three new approaches for anonymous authentication in P2Pnetworks to solve the above problems.
 
-    1. Ring signature based approach.
-    2. Authenticated key sharing based approach.
-    3. Zero knowledge proof based approach.
+1. Ring signature based approach.
+2. Authenticated key sharing based approach.
+3. Zero knowledge proof based approach.
 
 We deploy these protocol in a P2P environment where certificates are managed by peers with elevated privileges (super peers). To solve the problems of semi-trusted nature and unpredictable availability of peers we utilize Shamir’s secret sharing[7] technique. Amore detailed explanation of these cryptographic primitives is given in section 3. Then we test the performance of these ideas in a practical environment developed using the.Net framework.
 
 ## Related works
+
+### 2.1 Authentication in P2P
+Absence of a central server makes authentication in peer to peer (P2P) networks complex.
+Traditional cryptographic principles like Public Key Infrastructure (PKI) or Identity
+based Public Key Certificates (ID-PKC) are based on a trusted third party. Establishing
+a trusted third party in a semi-trusted network like P2P is a questionable task. Many
+P2P networks propose trust and reputation management schemes to solve this problem.[8]
+,[9], [10] use trust and reputation schemes to discover peers that can be considered as
+trusted peers of the network. These trusted peers are used in authentication as trusted
+third parties.
+The idea of reputation management systems is to evaluate a peer’s trustworthiness
+based on its interactions with other peers. There exist plenty of research in this area;
+EigenTurst [11], NICE[12], Regret [13], PeerTurst[14], FuzzyTrust [15].
+P2P systems that use reputation managements schemes to assist in authentication
+suffer from an obvious flow. These schemes assume that the reputation system is intelligent
+enough not to select malicious users as trusted peers. Trusting malicious peers to protect
+sensitive information can harm the system. For example, CST [? ] elect a set of peers as
+RPs (Reputed Peers) using EigenTrust. CST creates a pseudo-identity to hide the real
+identity of the user. The link between the identity and the pseudo-identity is broken into
+parts and stored in randomly selected RPs to protect users’ privacy. CST trusts RPs to
+protect the users’ identity. However, EigenTrust is vulnerable to collaborative attacks
+and therefore there exist a possibility that malicious peers are elected as RPs. Malicious
+RPs can reveal the identity of a user and exploit their privacy.
+Some researches suggest using a modified PKI for authentication in P2P networks
+[16], [17]. Rather than having a single centralized authority, the responsibility of the
+Certificate Authority (CA) is distributed across multiple peers in the network. This
+improves the scalability and robustness of the authentication process.
+The downside of using PKI in P2P is certificate management becomes complex. The
+authentication process becomes difficult to implement effectively. [17] use a set of peers as
+Authentication Servers (ASs). Even though this improves the scalability of the network,
+introduce new security risks like unreliability in certificate access and verification.
+To solve the problem of the absence of a centralized authority and at the same
+time keep the authentication process reliable, modern authentication schemes utilize
+blockchain technology. There is a lot of literature that proposes the idea of using
+blockchain technology to create a Distributed PKI [18], [19], [20], [21]. This seems to be a
+good solution to overcome the limitations of having a central trusted certificate authority.
+Blockchain can make the process of a CA distributed, immutable and transparent.
+Therefore can successfully solve the problems of malicious CAs, MITM attacks and single
+point of failure. Blockchain is used as a distributed key-value data storage. The data
+is public and readable to everyone.[22] propose the idea of using smart contracts to
+certificate management.
+The DPKI is only secure as long as honest nodes control collectively more than 51%
+of computing power. Also some argues the need of blockchain to decentralized PKI since
+the technology of blockchain is still new to the industry.
+The PGP Web of Trust [23] is another way to navigate the problem of not having a
+trusted central authority. WoT distribute the responsibility of a CA among users. The
+core concept of WoT is trust chains. For a simpler explanation, assume A wants to
+authenticate himself to B. There is a user C who trusts B. C can sign A’s certificate
+after verifying its authenticity. Then A can send the signed certificate to B. Since C
+has signed A’s certificate and B trusts C. B can trust A’s certificate is authentic. Using
+indirect trust chains WoT creates a community of trusted users. However WoT is not
+suitable P2P networks since, it is difficult for a new peer to join the network without
+personally knowing a existing user of the network.
+
+### 2.2 Anonymous Authentication in P2P
+The concept of anonymous authentication has been around for sometime. Pseudo
+Trust[24] has been one of the more popular publications of this topic. Pseudo Trust
+(PT) utilize the concept of double pseudonyms combine with zero knowledge proofs to
+authenticate users anonymously. PT also uses onion routing[2] and EigenTrust[11] trust
+management to provide a complete file delivery system with anonymous authentication.
+The anonymity comes from the one way property of the cryptographic hash functions. PT
+neglect one important feature of using the concept of pseudonyms to obtain anonymity.
+PT does not change PI (pseudo identity) prior to each authentication process. The PT
+protocol requires PIC (certificate of pseudo identity) to be send to the other party to
+start the authentication. Since PIC is same for a user, an eavesdropper can link two
+communication sessions to a specific user.
+[25] proposes an similar authentication scheme to PT for Internet of Vehicles (IoV).
+The only difference is the slight change of the zero knowledge proof and absence of onion
+routing the trust management. This also suffers from the same vulnerabilities as PT.
+[10] present an interesting approach to anonymous authentication. PPAA uses tags
+to obtain anonymity and at the same time link communication sessions. The idea is
+to use IDs of the two parties involved in the communication session create a tag. The
+two parties will not learn any knowledge other than the tag from running the protocol.
+To avoid having the same tag for different communication sessions between the same
+parties PPAA propose to include an event id into the tag design. Therefore only a party
+involved in the communication will be able to link a communication session to a previous
+session with the same party. The PPAA is secure in random oracle model if eXternal
+Diffie-Hellmam (XDH) and q-SDH assumption holds.
+CST[9] uses collaboration signature to authenticate users anonymously. As mentioned
+in section 2.1 CST uses EigenTrust[11] reputation system to select trusted peers (RPs).
+This is not safe in a semi-trusted environment like P2P networks. Other than that CST
+is said to be resilient against impersonate attacks, traceability and collaboration attacks.
+[26] presents a similar method as CST. They use FBST[27][Fair Blind Signatures] to
+present novel authentication scheme that keep the anonymity of honest users. Similar to
+CST this uses a trust management system called SOBIE to elect peers as super peers
+(SPs) and reputed peers (RPs). They are assumed to be trust worthy and play and
+important role in authentication. However, as mentioned previously trust management
+systems are not perfect. Malicious peers can get elected as SPs and RPs and they are
+able to revoke users’ anonymity. Similar to CST, [26] uses the concept of Shamir’s secret
+sharing [7] to reduce the vulnerability of exposed RPs. [7][How to share a secret] present
+a way to break a key and store it in multiple places and recreate the key when required.
+[26] use this technique to break the key (link between ID and pseudo ID) and store it
+among multiple RPs. Therefore even if few RPs got compromise it does not reveal user’s
+identity. Also a user use anonymous multicast to communicate with a SP. This makes it
+impossible for a SP to reveal an identity of a user.
+[28] uses an combination of Merkle’s puzzles[29] and zero knowledge proofs to provide
+anonymous authentication.
 
 ## Methodology
 ### 3.1 Cryptographic Primitives
@@ -61,7 +161,7 @@ Zero knowledge Proof (ZKP) is a protocol that allows a prover to prove the posse
 
 #### 3.1.2 Ring Signatures
 
-The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Shamir and Yael Tauman Kalai in [36]. Ring signatures are used to digitally sign messages on behalf of a group. At the same time, makes it computationally difficult to find the exact signer. 3.1 Cryptographic Primitives 9 Ring signatures are designed to provide anonymity to the message signer. The same functionality is provided by group signatures [37]. The only difference in group signature is that it needs an authoritative entity to generate the signature. Therefore that entity can revoke the anonymity of the signer. Ring signatures do not depend on a third party to generate a signature. Ring signatures are spontaneous and provide unconditional anonymity. Over the years different ring signature schemes have been published with different features; threshold ring signatures [38], linkable ring signatures[39], revocable ring signatures[40], traceable ring signatures[41]. Consider a scenario where a group of k entities where each entity has a public key Pi and a corresponding secret key Si. An entity r can generate a ring signature on a message m using (m, P1, . . . , Pk, Sr). Anyone with the knowledge of m, P1, . . . , Pk can verify the ring signature. No one outside the group (without a secret key Si) can generate a valid ring signature for the same group.
+The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Shamir and Yael Tauman Kalai in [36]. Ring signatures are used to digitally sign messages on behalf of a group. At the same time, makes it computationally difficult to find the exact signer. Ring signatures are designed to provide anonymity to the message signer. The same functionality is provided by group signatures [37]. The only difference in group signature is that it needs an authoritative entity to generate the signature. Therefore that entity can revoke the anonymity of the signer. Ring signatures do not depend on a third party to generate a signature. Ring signatures are spontaneous and provide unconditional anonymity. Over the years different ring signature schemes have been published with different features; threshold ring signatures [38], linkable ring signatures[39], revocable ring signatures[40], traceable ring signatures[41]. Consider a scenario where a group of k entities where each entity has a public key P<sub>i</sub> and a corresponding secret key Si. An entity r can generate a ring signature on a message m using (m, P1, . . . , Pk, Sr). Anyone with the knowledge of m, P1, . . . , Pk can verify the ring signature. No one outside the group (without a secret key Si) can generate a valid ring signature for the same group.
 
 #### 3.1.3 Shamir’s Secret Sharing
 
