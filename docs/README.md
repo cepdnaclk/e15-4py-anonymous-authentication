@@ -110,7 +110,7 @@ t−1
 i=0
 yi
 li(x))
-3.2 Conceptual design 10
+
 The idea of Shamir’s secret sharing is a popular concept in p2p systems. A p2p
 network does not have an centralized database to store peers’ keys. Storing keys in a
 selected set of peers might not be a good idea since p2p is a semi-trusted environment.
@@ -164,9 +164,13 @@ subset of the parts. A more detailed explanation of the implementation is given 
 3.3.1 .
 
 #### 3.2.3 Proposed Authentication Schemes
+<<<<<<< HEAD
 
 ##### Ring Signature Based approach
 
+=======
+Ring Signature Based approach
+>>>>>>> f4254a788dd54633b62e4b6940d1f87728f9a089
 The characteristics of ring signatures make it an interesting primitive in obtaining
 anonymous authentication. Ring signatures allows a message to be signed by a group of
 public keys. Making it impossible to identify the exact signer. The original ring signature
