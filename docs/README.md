@@ -41,11 +41,9 @@ title:
 
 ## Methodology
 
-\chapter{Methodology}\label{methodology}
+### Cryptographic Primitives
 
-\section{Cryptographic Primitives}
-
-\subsection{Zero Knowledge Proof}
+#### Zero Knowledge Proof
 
 Zero knowledge Proof (ZKP) is a protocol that allows a prover to prove the possession of some secret to a verifier without revealing the secret or any information related to the secret. The first idea of ZKP was introduced by Shafi Goldwasser, Silvio Micali, and Charles Rackoff in \cite{inbook}. Since then many different ZKPs have been published \cite{Tang}, \cite{Feige}, \cite{Cramer}, \cite{Sahai}. ZKPs are widely used in cryptography to implement cryptographic protocols due to its privacy, authentication and low complexity. 
 
