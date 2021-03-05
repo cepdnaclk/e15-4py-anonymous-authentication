@@ -3,22 +3,24 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and title
-repository-name: eYY-4yp-anonymous-authentication
-title: Anonymous and Distributed Authentication for Peer to Peer Networks
+repository-name: eYY-4yp-project-template
+title:
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Anonymous and Distributed Authentication for Peer to Peer Networks
+# Project Title
 
 #### Team
 
-- E/15/350, Pasan Tennakoon, [email](pasan96tennakoon@gmail.com)
-- E/15/180, Supipi Karunathilaka, [email](supipivirajini@gmail.com)
+- eNumber, Name, [email](mailto:name@email.com)
+- eNumber, Name, [email](mailto:name@email.com)
+- eNumber, Name, [email](mailto:name@email.com)
 
 #### Supervisors
 
-- Dr. Janaka Alawathugoda, [email](alawatugoda@eng.pdn.ac.lk)
+- Name, [email](mailto:name@eng.pdn.ac.lk)
+- Name, [email](mailto:name@eng.pdn.ac.lk)
 
 #### Table of content
 
@@ -35,113 +37,214 @@ title: Anonymous and Distributed Authentication for Peer to Peer Networks
 
 ## Abstract
 
-## Introduction
-
-The concept of Peer to peer (P2P) communication has gained significant attention inthe network community over the years. Since the release of Napster in 1998 many P2Papplications have been introduced. Bitcoin[1], BitTorrent, TOR[2], Freenet[3], etc aresome of the more popular P2P applications. The absence of centralized authority is themain reason behind the popularity of P2P applications. This eliminates the need for anexpensive central server. Also removes the vulnerability of a single point of failure. P2Pnetworks are considered to be more efficient and scalable than traditional client-serverapplications.The decentralized nature of P2P networks makes it difficult to integrate traditionalauthentication mechanisms. Due to this many such networks focus on providing useranonymity rather than authentication. The reduced security of these networks has createda lot of possible threats [4]. These threats can vary from uploading malicious files tofamous Sybil attacks [5]. Also, the anonymity feature of these networks has created a safehouse for cybercriminals [6]. Not being accountable for his/her actions, held responsibleand punished for malicious actions, P2P users have the freedom to misbehave. This cancause harm to the network and its users.
-
-We suggest that even in an anonymous network there should be some level of accountabilityto protect the network and its users. Accountability is achieved through authentication.
-
-To integrate an authentication mechanism into an anonymous P2P environment we needto solve two main challenges.•Authenticate in a decentralized environment.•Authenticate without revealing identity.These two points have been discussed separately since the start of the internet. Eachpoint has its own difficulties and challenges. Authentication needs to tackle problems likethe absence of a central server, certificate management in a distributed environment, thesemi-trusted nature of peers, the unpredictable availability of peers, etc. Authenticationneed to solve problems like not revealing sensitive information about authenticatingparty’s identity, secure against misbehaving parties (cheating verifiers and cheatingprovers), unlinkability of authentication sessions, practicality, etc.
-
-In this paper, we propose three new approaches for anonymous authentication in P2Pnetworks to solve the above problems.
-
-    1. Ring signature based approach.
-    2. Authenticated key sharing based approach.
-    3. Zero knowledge proof based approach.
-
-We deploy these protocol in a P2P environment where certificates are managed bypeers with elevated privileges (super peers). To solve the problems of semi-trusted natureand unpredictable availability of peers we utilize Shamir’s secret sharing[7] technique. Amore detailed explanation of these cryptographic primitives is given in section 3. Thenwe test the performance of these ideas in a practical environment developed using the.Net framework.
-
 ## Related works
 
-## Methodology
+Methodology
+3.1 Cryptographic Primitives
+3.1.1 Zero Knowledge Proof
+Zero knowledge Proof (ZKP) is a protocol that allows a prover to prove the possession
+of some secret to a verifier without revealing the secret or any information related to
+the secret. The first idea of ZKP was introduced by Shafi Goldwasser, Silvio Micali, and
+Charles Rackoff in [30]. Since then many different ZKPs have been published [31], [32],
+[33], [34]. ZKPs are widely used in cryptography to implement cryptographic protocols
+due to its privacy, authentication and low complexity.
+A zero knowledge proof consists of a prover and verifier. In a zero knowledge protocol,
+a prover must prove the knowledge of some secret using an interactive challenge-response
+scheme. The protocol must not reveal any information regarding the secret other than the
+knowledge of prover has the secret. A secure zkp must satisfy soundness, completeness
+and zero knowledge properties.
+There are two types of zero knowledge systems; interactive zero knowledge proofs
+and non-interactive zero knowledge proofs [35]. Our proposed protocol uses a zkp that
+utilize quadratic residues in modular arithmetic.
 
-### Cryptographic Primitives
-
-#### Zero Knowledge Proof
-
-Zero knowledge Proof (ZKP) is a protocol that allows a prover to prove the possession of some secret to a verifier without revealing the secret or any information related to the secret. The first idea of ZKP was introduced by Shafi Goldwasser, Silvio Micali, and Charles Rackoff in \cite{inbook}. Since then many different ZKPs have been published \cite{Tang}, \cite{Feige}, \cite{Cramer}, \cite{Sahai}. ZKPs are widely used in cryptography to implement cryptographic protocols due to its privacy, authentication and low complexity. 
-
-A zero knowledge proof consists of a prover and verifier. In a zero knowledge protocol, a prover must prove the knowledge of some secret using an interactive challenge-response scheme. The protocol must not reveal any information regarding the secret other than the knowledge of prover has the secret. A secure zkp must satisfy soundness, completeness and zero knowledge properties.  
-
-There are two types of zero knowledge systems; interactive zero knowledge proofs and non-interactive zero knowledge proofs \cite{Wu}. Our proposed protocol uses a zkp that utilize quadratic residues in modular arithmetic. \\
-
-\subsection{Ring Signatures}
-
-The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Shamir and Yael Tauman Kalai in \cite{Rivest}. Ring signatures are used to digitally sign messages on behalf of a group. At the same time, makes it computationally difficult to find the exact signer. 
-
-Ring signatures are designed to provide anonymity to the message signer. The same functionality is provided by group signatures \cite{Davies1991}. The only difference in group signature is that it needs an authoritative entity to generate the signature. Therefore that entity can revoke the anonymity of the signer. Ring signatures do not depend on a third party to generate a signature. Ring signatures are spontaneous and provide unconditional anonymity.
-
-Over the years different ring signature schemes have been published with different features; threshold ring signatures \cite{Bresson}, linkable ring signatures\cite{Liu}, revocable ring signatures\cite{Dennis}, traceable ring signatures\cite{Fujisaki}. 
-
-Consider a scenario where a group of k entities where each entity has a public key Pi and a corresponding secret key Si. An entity r can generate a ring signature on a message m using $(m, P_1, …, P_k, S_r)$. Anyone with the knowledge of $m, P_1, …, P_k$ can verify the ring signature. No one outside the group (without a secret key $S_i$) can generate a valid ring signature for the same group. \\
-
-\subsection{Shamir's Secret Sharing}
-
-In 1979 Adi Shamir introduced the concept of Shamir's secret sharing\cite{Adi}[How to Share a Secret]. This allows a secret to be divided into n parts. The secret can be reconstructed with atleast t parts where $(1 \leq t \leq n)$. No knowledge about the secret can be learnt with (t-1) parts.
-
-The concept is based on polynomial interpolation. The idea is to generate a polynomial f(x) of (t-1) points. First we select (t-1) random positive integers such that $(a_1, a_2, .., a_{t-1})$. Then set $a_0$ to the secret we want to share. These points are used to generate the polynomial f(x).
-
-\[f(x) = a_0 + a_1x +a_2x^2 + ... + a_{t-1}x^{t-1} \]
-
-Then we get n points $(x_i, y_i)$ corresponding to the polynomial. Given any subset of t points $a_0$ can be found by lagrange basis interpolation. 
-
-\[ l_i = \frac{x - x_0}{x_i-x_0} \times \frac{x - x_1}{x_i-x_1} \times ... \times \frac{x - x_{t-1}}{x_i-x_{t-1}}\]
-
-\[ f(x) = \sum_{i=0}^{t-1} y_il_i(x)) \]
-
-The idea of Shamir's secret sharing is a popular concept in p2p systems. A p2p network does not have an centralized database to store peers' keys. Storing keys in a selected set of peers might not be a good idea since p2p is a semi-trusted environment. For an example when a peer request a key from another peer, he might not respond. Therefore keys need to be broken into parts and distributed among multiple peers. A peer  should be able to reconstruct a key without the knowledge of all the parts. \cite{Xiaoliang}, \cite{Sun} are p2p anonymous authentication mechanisms that use the concept of Shamir's secret sharing.\\
-
- 
-
-\section{Conceptual design}
-
-\subsection{P2P network design}
-
-Using the .Net framework we implemented a hybrid P2P network\cite{BeverlyYang2003}. A traditional hybrid peer to peer network consists of peers and super peers. Hybrid P2P systems is a combination of purely distributed P2P systems and mediated P2P  systems. Hybrid systems are designed to overcome the problems of the two mentioned systems. These systems provide search efficiency of mediated P2P systems while maintaining the reliability of decentralization similar to pure P2P systems\cite{Backx2002}. 
-
-Our P2P network consists of three types of entities; the main server, ordinary peers (hereafter mentioned as peers) and super peers. A peer communicates with the main server only at the time of registration. Users join the network as peers. Peers are ordinary service requestors. They are connected to the system through super peers. Every peer is assumed to be behind a NAT environment. Peers with public IP addresses and higher computational power are promoted to be super peers. 
-
-Super peers have more responsibility for the system. A super peer is connected to one or more other super peers in the network and responsible for one or more peers. They can communicate among other super peers using the super network. Super peers can join or leave the network at any time. Dynamic behaviour of super peers should not affect the connectivity of the network. Our design of the network is able to change the topology according to this dynamic behaviour of peers and maintain connectivity among existing super peers.
-
-A super peer is only responsible for nodes under his scope and does not know any information regarding other peers of the system.
-Therefore a node discovery process becomes an exhaustive task. This can be accomplished in two ways; flooding search and random walk. We utilize flooding search in this project since the random walk is not guaranteed to produce results\cite{Ahmed2011}.
-
-\subsection{Distributed Certificate Management}
-
-The decentralized environment of the P2P network does not allow traditional methods of authentication. It's difficult to maintain a centralized database of certificates where the availability of peers cannot be predicted. Distributing certificates among super peers is not a viable solution since super peers are not always available. Therefore all the certificates under this super peer remains not accessible. Also, malicious super peers might delete certificates from the network. The obvious solution is to keep multiple copies of the certificates. We propose a different solution by using Shamir's secret sharing algorithm. The idea is to break the certificates into multiple parts and distribute across the P2P network. When needed, the certificates can be reconstructed from a minimal subset of the parts. A more detailed explanation of the implementation is given in section 3.3.1 .
-
-\subsection{Proposed Authentication Schemes}
-
- \subsubsection{Ring Signature Based approach}
- 
-The characteristics of ring signatures make it an interesting primitive in obtaining anonymous authentication. Ring signatures allows a message to be signed by a group of public keys. Making it impossible to identify the exact signer. The original ring signature scheme\cite{Rivest} and most of the proposed ring signatures provide complete anonymity. This is not suitable for authentication. This make it impossible to revoke the anonymity of malicious peers. Therefore we used the revocable ring signature scheme proposed in \cite{Dennis} to create a simple authentication protocol that protect users' privacy. This is just a simple suggestion, of a way to obtain anonymous authentication using existing ring signature schemes. The idea is to challenge prover to generate a ring signature using a random nonce generated by a verifier. If the prover is able to accomplish this he can successfully authenticate himself. 
-
- \subsubsection{Authenticated key sharing based approach}
- 
- We propose a novel authentication mechanism that allows a peer to authenticate without revealing their identity. The basic idea of the protocol is to present prover a set of public keys and challenge to prove the knowledge of atleast one secret key corresponding to a public key from the set. This idea is simple but the protocol should not reveal any information related to the prover's identity. Also a prover without a valid key pair should not be able to authenticate himself. To accomplish that we employ a authenticated key sharing scheme introduced in \cite{Alawatugoda}.
+3.1.2 Ring Signatures
+The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Shamir and
+Yael Tauman Kalai in [36]. Ring signatures are used to digitally sign messages on behalf
+of a group. At the same time, makes it computationally difficult to find the exact signer.
+3.1 Cryptographic Primitives 9
+Ring signatures are designed to provide anonymity to the message signer. The same
+functionality is provided by group signatures [37]. The only difference in group signature
+is that it needs an authoritative entity to generate the signature. Therefore that entity
+can revoke the anonymity of the signer. Ring signatures do not depend on a third party
+to generate a signature. Ring signatures are spontaneous and provide unconditional
+anonymity.
+Over the years different ring signature schemes have been published with different
+features; threshold ring signatures [38], linkable ring signatures[39], revocable ring
+signatures[40], traceable ring signatures[41].
+Consider a scenario where a group of k entities where each entity has a public key Pi
+and a corresponding secret key Si. An entity r can generate a ring signature on a message
+m using (m, P1, . . . , Pk, Sr). Anyone with the knowledge of m, P1, . . . , Pk can verify the
+ring signature. No one outside the group (without a secret key Si) can generate a valid
+ring signature for the same group.
 
 
-\subsubsection{Zero Knowledge Proof Based Approach}
+3.1.3 Shamir’s Secret Sharing
+In 1979 Adi Shamir introduced the concept of Shamir’s secret sharing[7][How to Share a
+Secret]. This allows a secret to be divided into n parts. The secret can be reconstructed
+with atleast t parts where (1 ≤ t ≤ n). No knowledge about the secret can be learnt
+with (t-1) parts.
+The concept is based on polynomial interpolation. The idea is to generate a polynomial
+f(x) of (t-1) points. First we select (t-1) random positive integers such that (a1, a2, .., at−1).
+Then set a0 to the secret we want to share. These points are used to generate the
+polynomial f(x).
+f(x) = a0 + a1x + a2x
+2 + ... + at−1x
+t−1
+Then we get n points (xi
+, yi) corresponding to the polynomial. Given any subset of t
+points a0 can be found by lagrange basis interpolation.
+li =
+x − x0
+xi − x0
+×
+x − x1
+xi − x1
+× ... ×
+x − xt−1
+xi − xt−1
+f(x) = X
+t−1
+i=0
+yi
+li(x))
+3.2 Conceptual design 10
+The idea of Shamir’s secret sharing is a popular concept in p2p systems. A p2p
+network does not have an centralized database to store peers’ keys. Storing keys in a
+selected set of peers might not be a good idea since p2p is a semi-trusted environment.
+For an example when a peer request a key from another peer, he might not respond.
+Therefore keys need to be broken into parts and distributed among multiple peers. A
+peer should be able to reconstruct a key without the knowledge of all the parts. [9], [26]
+are p2p anonymous authentication mechanisms that use the concept of Shamir’s secret
+sharing.
+3.2 Conceptual design
+3.2.1 P2P network design
+Using the .Net framework we implemented a hybrid P2P network[42]. A traditional
+hybrid peer to peer network consists of peers and super peers. Hybrid P2P systems is
+a combination of purely distributed P2P systems and mediated P2P systems. Hybrid
+systems are designed to overcome the problems of the two mentioned systems. These
+systems provide search efficiency of mediated P2P systems while maintaining the reliability
+of decentralization similar to pure P2P systems[43].
+Our P2P network consists of three types of entities; the main server, ordinary peers
+(hereafter mentioned as peers) and super peers. A peer communicates with the main
+server only at the time of registration. Users join the network as peers. Peers are ordinary
+service requestors. They are connected to the system through super peers. Every peer is
+assumed to be behind a NAT environment. Peers with public IP addresses and higher
+computational power are promoted to be super peers.
+Super peers have more responsibility for the system. A super peer is connected to one
+or more other super peers in the network and responsible for one or more peers. They
+can communicate among other super peers using the super network. Super peers can
+join or leave the network at any time. Dynamic behaviour of super peers should not
+affect the connectivity of the network. Our design of the network is able to change the
+topology according to this dynamic behaviour of peers and maintain connectivity among
+existing super peers.
+A super peer is only responsible for nodes under his scope and does not know any
+information regarding other peers of the system. Therefore a node discovery process
+becomes an exhaustive task. This can be accomplished in two ways; flooding search and
+3.2 Conceptual design 11
+random walk. We utilize flooding search in this project since the random walk is not
+guaranteed to produce results[44].
+3.2.2 Distributed Certificate Management
+The decentralized environment of the P2P network does not allow traditional methods
+of authentication. It’s difficult to maintain a centralized database of certificates where
+the availability of peers cannot be predicted. Distributing certificates among super peers
+is not a viable solution since super peers are not always available. Therefore all the
+certificates under this super peer remains not accessible. Also, malicious super peers
+might delete certificates from the network. The obvious solution is to keep multiple
+copies of the certificates. We propose a different solution by using Shamir’s secret sharing
+algorithm. The idea is to break the certificates into multiple parts and distribute across
+the P2P network. When needed, the certificates can be reconstructed from a minimal
+subset of the parts. A more detailed explanation of the implementation is given in section
+3.3.1 .
+3.2.3 Proposed Authentication Schemes
+Ring Signature Based approach
+The characteristics of ring signatures make it an interesting primitive in obtaining
+anonymous authentication. Ring signatures allows a message to be signed by a group of
+public keys. Making it impossible to identify the exact signer. The original ring signature
+scheme[36] and most of the proposed ring signatures provide complete anonymity. This
+is not suitable for authentication. This make it impossible to revoke the anonymity of
+malicious peers. Therefore we used the revocable ring signature scheme proposed in
+[40] to create a simple authentication protocol that protect users’ privacy. This is just
+a simple suggestion, of a way to obtain anonymous authentication using existing ring
+signature schemes. The idea is to challenge prover to generate a ring signature using a
+random nonce generated by a verifier. If the prover is able to accomplish this he can
+successfully authenticate himself.
+Authenticated key sharing based approach
+We propose a novel authentication mechanism that allows a peer to authenticate without
+revealing their identity. The basic idea of the protocol is to present prover a set of public
+keys and challenge to prove the knowledge of atleast one secret key corresponding to
+3.3 Methodological approach 12
+a public key from the set. This idea is simple but the protocol should not reveal any
+information related to the prover’s identity. Also a prover without a valid key pair should
+not be able to authenticate himself. To accomplish that we employ a authenticated key
+sharing scheme introduced in [45].
+Zero Knowledge Proof Based Approach
+Zkp is a popular approach to obtain anonymous authentication in p2p networks. This
+technique has been utilized in [24], [25] and [10]. Many of these approaches relies on
+pseudonyms to hide the identity. We propose a new authentication protocol that uses
+zero knowledge proofs to hide the identity among a group of users. The protocol achieves
+properties similar to ring signatures. This is an modification of the Schnorr’s zero
+knowledge proof [46]. The method is similar to the authenticated key sharing based
+approach in the sense that the challenge is to prove the knowledge of a secret key in a
+set of public keys. However unlike previous method, we use zero knowledge proofs to do
+that. Therefore this method achieve k anonymity
 
- Zkp is a popular approach to obtain anonymous authentication in p2p networks. This technique has been utilized in \cite{LuLi}, \cite{Han2020} and \cite{Tsangs}. Many of these approaches relies on pseudonyms to hide the identity. We propose a new authentication protocol that uses zero knowledge proofs to hide the identity among a group of users. The protocol achieves properties similar to ring signatures. This is an modification of the Schnorr's zero knowledge proof \cite{Soares2013}. The method is similar to the authenticated key sharing based approach in the sense that the challenge is to prove the knowledge of a secret key in a set of public keys. However unlike previous method, we use zero knowledge proofs to do that. Therefore this method achieve k anonymity. 
 
-
-\section{Methodological approach}
-
-
-\subsection{Distributed Certificate Management}
-
-During the initial interaction of a peer, the corresponding super peer obtains the peer's certificate. The super peer breaks the certificate into n parts using Shamir's algorithm. The super peer then floods these parts across the network. Once a request to recreate the certificate(s) received. Super peer again floods a request(s) to collect the parts of the certificate. The super peers that are holding these parts will send them to the corresponding super peers. The original certificate can be recreated as long as r parts are received by the super peer (r $\leq$ n).
-
-This technique allows distributing certificates in a more dynamic way. As long as r super peers can be accessed, the certificate can be recreated. This method only requires minimal storage. That is, the size of a single part does not exceed the size of the certificate. This is also the more flexible approach. n and r can be changed for each certificate without affecting other certificates. However, then there needs to be a way to identify n and r for each certificate. 
-
-n and r are performance metrics. Increasing n will increase the average key storage size in super peers. In section \rom{6} we analyze the performance of increasing r while n is kept as a constant.
-
-\subsection{Proposed Authentication Schemes}
-
- \subsubsection{Ring Signature Based approach}
- 
- The protocol starts by the prover collecting a set of certificates from the super peer. Prover then randomly select a subset of the certificates. Then he verify the authenticity of the certificates and obtains the set of public keys from the subset of certificates using main server's public key. Prover hides his own certificate among this subset of certificates and send them to the verifier to initiate the authentication. After authenticating the certificates, verifier obtains the set of public keys using main server's public key. Then verifier generates a random nonce and challenge prover to generate a ring signature for this random nonce, using the above set of public keys. Prover use his secret key, the set of public keys and main server's public key to generate a ring signature according to the algorithm proposed in \cite{Dennis}. Prover then sends the ring signature to the verifier. Verifier verifies the authenticity of the ring signature according to the random nonce he sent at the previous step. If the verification is successful, authentication is complete. Otherwise verifier sends a fail message.
+3.3 Methodological approach
+3.3.1 Distributed Certificate Management
+During the initial interaction of a peer, the corresponding super peer obtains the peer’s
+certificate. The super peer breaks the certificate into n parts using Shamir’s algorithm.
+The super peer then floods these parts across the network. Once a request to recreate
+the certificate(s) received. Super peer again floods a request(s) to collect the parts
+of the certificate. The super peers that are holding these parts will send them to the
+corresponding super peers. The original certificate can be recreated as long as r parts
+are received by the super peer (r ≤ n).
+This technique allows distributing certificates in a more dynamic way. As long as r
+super peers can be accessed, the certificate can be recreated. This method only requires
+minimal storage. That is, the size of a single part does not exceed the size of the
+certificate. This is also the more flexible approach. n and r can be changed for each
+certificate without affecting other certificates. However, then there needs to be a way to
+identify n and r for each certificate.
+n and r are performance metrics. Increasing n will increase the average key storage
+size in super peers. In section 6 we analyze the performance of increasing r while n is
+kept as a constant.
+3.3 Methodological approach 13
+3.3.2 Proposed Authentication Schemes
+Ring Signature Based approach
+The protocol starts by the prover collecting a set of certificates from the super peer.
+Prover then randomly select a subset of the certificates. Then he verify the authenticity
+of the certificates and obtains the set of public keys from the subset of certificates using
+main server’s public key. Prover hides his own certificate among this subset of certificates
+and send them to the verifier to initiate the authentication. After authenticating the
+certificates, verifier obtains the set of public keys using main server’s public key. Then
+verifier generates a random nonce and challenge prover to generate a ring signature for
+this random nonce, using the above set of public keys. Prover use his secret key, the set
+of public keys and main server’s public key to generate a ring signature according to the
+algorithm proposed in [40]. Prover then sends the ring signature to the verifier. Verifier
+verifies the authenticity of the ring signature according to the random nonce he sent at
+the previous step. If the verification is successful, authentication is complete. Otherwise
+verifier sends a fail message.
+Authenticated key sharing based approach
+As same as the previous approach prover collects a set of certificates from the super
+peer. Then randomly select a subset out of them. After verifying the authenticity of the
+certificates prover extract the corresponding public keys. Prover mix his certificate into
+the subset of certificates and send them to the verifier. Verifier obtains the public keys
+after verifying the authenticity of the certificates. Then generate X = g
+x by selecting a
+random x. Then use the set of public keys to encrypt X. Thus creating a set of ciphertexts
+where each corresponds to a different public key from the set. Since one of the public
+key is prover’s, he will be able decrypt X with his secret key. After decrypting X, prover
+selects a random y and calculates Y = g
+y
+. Then generate K = Xy
+. K is the shared key.
+Then he sends Y to the verifier encrypted with verifier’s public key. Verifier decrypts Y.
+Then compute K = Y
+x
+. At this stage both parties have the same shared key K. Verifier
+encrypts a random number R using a symmetric key encryption scheme using K as the
+key. Then challenge prover to decrypt this and send R back. If the prover generated
+the correct K at the previous steps, he will be able to decrypt R. Therefore prover can
+successfully authenticate himself. Otherwise verifier sends a fail message.
 
 
  \subsubsection{Authenticated key sharing based approach}
@@ -432,19 +535,19 @@ Modifying the Msg3 will not gain any advantage to M. As mentioned under soundnes
 ## Conclusion
 
 ## Publications
-
 1. [Semester 7 report](./)
 2. [Semester 7 slides](./)
 3. [Semester 8 report](./)
 4. [Semester 8 slides](./)
 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./).
 
+
 ## Links
 
-[//]: # " NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS "
+[//]: # ( NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS )
 
-- [Project Repository](https://github.com/cepdnaclk/anonymous-authentication)
-- [Project Page](https://cepdnaclk.github.io/anonymous-authentication)
+- [Project Repository](https://github.com/cepdnaclk/repository-name)
+- [Project Page](https://cepdnaclk.github.io/repository-name)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
