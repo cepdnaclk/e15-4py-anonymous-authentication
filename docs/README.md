@@ -166,6 +166,7 @@ The notion of ring signature was first introduced in 2001 by Ron Rivest, Adi Sha
 #### 3.1.3 Shamir’s Secret Sharing
 
 In 1979 Adi Shamir introduced the concept of Shamir’s secret sharing[7][How to Share a Secret]. This allows a secret to be divided into n parts. The secret can be reconstructed with atleast t parts where (1 ≤ t ≤ n). No knowledge about the secret can be learnt with (t-1) parts. The concept is based on polynomial interpolation. The idea is to generate a polynomial f(x) of (t-1) points. First we select (t-1) random positive integers such that (a1, a2, .., at−1). Then set a0 to the secret we want to share. These points are used to generate the polynomial f(x). f(x) = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> + ... + a<sub>t−1</sub>x<sup>t−1</sup> Then we get n points (x<sub>i</sub> , y<sub>i</sub>) corresponding to the polynomial. Given any subset of t points a0 can be found by lagrange basis interpolation. 
+
 li = x − x<sub>0</sub> x<sub>i</sub> − x<sub>0</sub> × x − x<sub>1</sub> x<sub>i</sub> − x<sub>1</sub> × ... × x − x<sub>t−1</sub> x<sub>i</sub> − x<sub>t−1</sub>
 f(x) = X t−1 i=0 y<sub>i</sub>l<sub>i</sub>(x)
 
