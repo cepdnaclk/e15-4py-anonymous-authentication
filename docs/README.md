@@ -292,62 +292,49 @@ a fail message to the prover.
 #### 4.1.3 Zero Knowledge Proof Based Approach
 #### Setup
 
- 1. P and Q are two large prime number where P-1 |Q.gisageneratorof acyclicgroupofZ<sup>∗</sup><sub>P</sub>
+ 1. P and Q are two large prime number where P-1 |Q.gisageneratorof acyclicgroupofZ<sup>∗</sup><sub>p</sub>
 where order of the group is Q. P, Q and g are group parameters.
 
 #### Registration
 
 1. A user has an ID which can be anything related to the identity of the user. Selects
-a random integer ru. Then generate au
-au = H1(ID, ru)
-such that au is from [0, Q-1]. au is the private key of the user. Then to generate
-the public key Au user calculates
-Au = g
-aumodp
-User sends the registration request along with his ID, Au to the main server.
-4.1 Proposed Schemes 18
-2. Main server verifies the identity of the user. Then the server signs Au with his
-private key Ks to generate Certu. Then sends Certu to the user.
+a random integer r<sub>u</sub>. Then generate a<sub>u</sub>
+a<sub>u</sub> = H1(ID, r<sub>u</sub>)
+such that a<sub>u</sub> is from [0, Q-1]. a<sub>u</sub> is the private key of the user. Then to generate
+the public key A<sub>u</sub> user calculates
+A<sub>u</sub> = g<sup>a<sub>u</sub></sup>modp
+User sends the registration request along with his ID, A<sub>u</sub> to the main server.
+2. Main server verifies the identity of the user. Then the server signs A<sub>u</sub> with his
+private key K<sub>s</sub> to generate Cert<sub>u</sub>. Then sends Cert<sub>u</sub> to the user.
 
 
 #### Authentication
 
 1. Prover collects k certificates from the super peer. Then randomly selects n-1
-certificates from the the set. After verifying the authenticity of the selected certificates prover generates C = {Cert1, Cert2, .., Certn−1}. Prover then obtain each
-corresponding public key from the certificates to generate P = {A1, A2, . . . An−1}.
+certificates from the the set. After verifying the authenticity of the selected certificates prover generates C = {Cert<sub>1</sub>, Cert<sub>2</sub>, .., Cert<sub>n−1</sub>}. Prover then obtain each
+corresponding public key from the certificates to generate P = {A<sub>1</sub>, A<sub>2</sub>, . . . A<sub>n−1</sub>}.
 Prover then selects a random number s from the range [0, Q-1]. Then selects another
-n-1 random numbers from the range [0, Q-1] to generate the V = {v1, v2, . . . , vn−1}.
+n-1 random numbers from the range [0, Q-1] to generate the V = {v<sub>1</sub>, v<sub>2</sub>, . . . , v<sub>n−1</sub>}.
 Prover calculates
-U = g
-sA
-v1A
-v2
-. . . Avn−1
+U = g<sup>s</sup>A<sup>v<sub>1</sub></sup>A<sup>v<sub>2</sub></sup>
+. . . A<sup>v<sub>n−1</sub></sup>
 Prover sends U to the verifier to initiate the authentication.
 2. Verifier selects a random number c from the range [0, Q-1] and sends it to the
 prover.
 3. Prover calculates
-vp = v1 ⊕ v2 ⊕ . . . vn−1 ⊕ c
-Then insert vp to the vector V such that V = {v1, . . . vp, . . . vn−1}. Prover also
-update C = {Cert1, ..., Certp, ..., Certn−1} where Certp is prover’s certificate. Then
+v<sub>p</sub> = v<sub>1</sub> ⊕ v<sub>2</sub> ⊕ . . . v<sub>n−1</sub> ⊕ c
+Then insert vp to the vector V such that V = {v<sub>1</sub>, . . . v<sub>p</sub>, . . . v<sub>n−1</sub>}. Prover also
+update C = {Cert<sub>1</sub>, ..., Cert<sub>p</sub>, ..., Cert<sub>n−1</sub>} where Certp is prover’s certificate. Then
 calculates
-r = s − apvpmodp
+r = s − a<sub>p</sub>v<sub>p</sub>modp
 Prover sends r, V, C to the verifier.
 4. After verifying the authenticity of the certificates in C. Verifier calculates
-c
-′ = v1 ⊕ v2 ⊕ . . . ⊕ vn
-If c ̸= c
-′
+c′ = v<sub>1</sub> ⊕ v<sub>2</sub> ⊕ . . . ⊕ v<sub>n</sub>
+If c ̸= c′
 , terminate the authentication session. Otherwise calculates
-4.2 Testing 19
-U
-′ = g
-rA
-v1A
-v2
-. . . Avn
-If U = U
-′
+
+U′ = g<sup>r</sup>A<sup>v<sub>1</sub></sup>A<sup>v<sub>2</sub></sup>. . . A<sup>v<sub>n</sub></sup>
+If U = U′
 , authentication is successful. Otherwise terminate the authentication.
 
 ### 4.2 Testing
