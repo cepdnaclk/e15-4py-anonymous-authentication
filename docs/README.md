@@ -211,7 +211,7 @@ The protocol starts by the prover collecting a set of certificates from the supe
 As same as the previous approach prover collects a set of certificates from the super peer. Then randomly select a subset out of them. After verifying the authenticity of the certificates prover extract the corresponding public keys. Prover mix his certificate into the subset of certificates and send them to the verifier. Verifier obtains the public keys after verifying the authenticity of the certificates. Then generate X = g<sup>x</sup> by selecting a random x. Then use the set of public keys to encrypt X. Thus creating a set of ciphertexts where each corresponds to a different public key from the set. Since one of the public key is prover’s, he will be able decrypt X with his secret key. After decrypting X, prover selects a random y and calculates Y = g<sup>y</sup> . Then generate K = X<sup>y</sup> . K is the shared key. Then he sends Y to the verifier encrypted with verifier’s public key. Verifier decrypts Y. Then compute K = Y<sup>x</sup> . At this stage both parties have the same shared key K. Verifier encrypts a random number R using a symmetric key encryption scheme using K as the key. Then challenge prover to decrypt this and send R back. If the prover generated the correct K at the previous steps, he will be able to decrypt R. Therefore prover can successfully authenticate himself. Otherwise verifier sends a fail message.
 
 #### Zero Knowledge Proof Based Approach 
-As same as the above two methods prover collects k certificates from the super peer. Then randomly select n-1 certificates and create C and P vectors as the above methods. However in this method public key is A<sub>u</sub> = g<sup>a<sub>p</sub></sup> where au is the private key. Similar to Schnorr’s protocol prover generates U. The difference is U contains factors of A<sup>vi</sup><sub>i</sub> where v<sub>i</sub> is a random number. This is generated only using the collected public keys (Prover’s public key is not in U). Prover then send U to the verifier. Verifier sends a challenge c to the prover. Prover xor all elements of vi with c to obtain v<sub>p</sub>. Then mix v<sub>p</sub> among the set of v<sub>i</sub> s and send them along with the set of public keys (including prover’s public key) to the verifier. Prover also sends r which is s − a<sub>p</sub>v<sub>p</sub>modp. Then prover does two steps of verification. First he xor vi s and check if it’s equal to c. If it is not terminate the authentication. Otherwise generate U<sup>′</sup> using r, A and v<sub>i</sub> s. If U = U<>sup>′</sup> authentication is successful. Otherwise sends a fail message to the prover. A more detailed explanation is given in section 4.1.3 .
+As same as the above two methods prover collects k certificates from the super peer. Then randomly select n-1 certificates and create C and P vectors as the above methods. However in this method public key is A<sub>u</sub> = g<sup>a<sub>p</sub></sup> where au is the private key. Similar to Schnorr’s protocol prover generates U. The difference is U contains factors of A<sup>vi</sup><sub>i</sub> where v<sub>i</sub> is a random number. This is generated only using the collected public keys (Prover’s public key is not in U). Prover then send U to the verifier. Verifier sends a challenge c to the prover. Prover xor all elements of vi with c to obtain v<sub>p</sub>. Then mix v<sub>p</sub> among the set of v<sub>i</sub> s and send them along with the set of public keys (including prover’s public key) to the verifier. Prover also sends r which is s − a<sub>p</sub>v<sub>p</sub>modp. Then prover does two steps of verification. First he xor vi s and check if it’s equal to c. If it is not terminate the authentication. Otherwise generate U<sup>′</sup> using r, A and v<sub>i</sub> s. If U = U<sup>′</sup> authentication is successful. Otherwise sends a fail message to the prover. A more detailed explanation is given in section 4.1.3 .
 
 ## Experiment Setup and Implementation
 
@@ -219,31 +219,30 @@ As same as the above two methods prover collects k certificates from the super p
 #### 4.1.1 Ring Signature Based approach
 #### Registration
 1. A user has an ID which can be anything related to the identity of the user. Selects
-a random number ru. Then generate a public key Pu such that
-Pu = H1(ID, ru)
-User then generates the private key Su corresponding to Pu
-User sends the registration request along with his ID, Pu to the main server.
-2. Main server verifies the identity of the user. Then the server signs Pu with his
-private key Ss to generate Certu. Then sends Certu to the user.
+a random number r<sub>u</sub>. Then generate a public key P<sub>u</sub> such that
+P<sub>u</sub> = H1(ID, r<sub>u</sub>)
+User then generates the private key S<sub>u</sub> corresponding to P<sub>u</sub>
+User sends the registration request along with his ID, P<sub>u</sub> to the main server.
+2. Main server verifies the identity of the user. Then the server signs P<sub>u</sub> with his
+private key S<sub>s</sub> to generate Cert<sub>u</sub>. Then sends Cert<sub>u</sub> to the user.
 
 #### Authentication
 
 1. Prover collects k certificates from the super peer. Then randomly selects n-1
 certificates from the the set. After verifying the authenticity of the selected
-certificates prover generates C = {Cert1, Cert2, .., Certn} which includes prover’s
-certificate Certp as well. Prover then obtain each corresponding public key from the
-4.1 Proposed Schemes 16
-certificates to generate P = {P1, P2, .., Pn}. Then send C to the verifier, encrypted
-with verifier’s public key Pv.
+certificates prover generates C = {Cert<sub>1</sub>, Cert<sub>2</sub>, .., Cert<sub>n</sub>} which includes prover’s
+certificate Cert<sub>p</sub> as well. Prover then obtain each corresponding public key from the
+certificates to generate P = {P<sub>1<sub>, P<sub>2<sub>, .., P<sub>n<sub>}. Then send C to the verifier, encrypted
+with verifier’s public key P<sub>v<sub>.
 2. Verifier decrypts the message to obtain C. After verifying the authenticity of each
 Certi
-, verifier generates each Pi using main servers public key Ps. Then generate
+, verifier generates each P<sub>i</sub> using main servers public key P<sub>s</sub>. Then generate
 H = Hash(P). Then sends H and a random nonce N to the prover.
 3. Prover generate H′ = Hash(P) and if H ̸= H′
 terminate the authentication.
-Otherwise use his secret key Sp, P and Ps to sign N and generate ring signature
+Otherwise use his secret key S<sub>p</sub>, P and P<sub>s</sub> to sign N and generate ring signature
 σ using [40] ring signature scheme. Then send σ to the verifier, encrypted with
-verifier’s public key Pv.
+verifier’s public key P<sub>v</sub>.
 4. Verifier decrypts the message to obtain σ. Then verify whether σ corresponds to N
 using P set of public keys (obtained in step 2). If the verification is success prover
 is successfully authenticated. Otherwise verifier sends a fail message.
@@ -252,40 +251,35 @@ is successfully authenticated. Otherwise verifier sends a fail message.
 #### Registration
 
 1. A user has an ID which can be anything related to the identity of the user. Selects
-a public ru. Then generate
-Pu = H1(ID, ru)
-Pu is the public key of the user. User then generates the private key Su corresponding
-to Pu
-User sends the registration request along with his ID, Pu to the main server.
-2. Main server verifies the identity of the user. Then the server signs Pu with his
-private key Ss to generate Certu. Then sends Certu to the user.
+a public r<sub>u</sub>. Then generate
+P<sub>u</sub> = H1(ID, r<sub>u</sub>)
+P<sub>u</sub> is the public key of the user. User then generates the private key S<sub>u</sub> corresponding
+to P<sub>u</sub>
+User sends the registration request along with his ID, P<sub>u</sub> to the main server.
+2. Main server verifies the identity of the user. Then the server signs P<sub>u</sub> with his
+private key S<sub>s</sub> to generate Cert<sub>u</sub>. Then sends Cert<sub>u</sub> to the user.
 
 #### Authentication
 
  1. Prover collects k certificates from the super peer. Then randomly selects n-1
 certificates from the the set. After verifying the authenticity of the selected
-certificates prover generates C = {Cert1, Cert2, .., Certn} | C includes Certp as
-well. Then send C to the verifier, encrypted with verifier’s public key (Pv).
-4.1 Proposed Schemes 17
-2. Verifier decrypts P using his secret key (Sv). Generate H = Hash(P). Then
-generate a random number x and obtain X = g
-x
-. Then generate n ciphertexts
-CT = {C1, C2, ..., Cn}|Ci = EPi
+certificates prover generates C = {Cert<sub>1</sub>, Cert<sub>2</sub>, .., Cert<sub>n</sub>} | C includes Certp as
+well. Then send C to the verifier, encrypted with verifier’s public key (P<sub>v</sub>).
+2. Verifier decrypts P using his secret key (S<sub>v</sub>). Generate H = Hash(P). Then
+generate a random number x and obtain X = g<sup>x</sup>. Then generate n ciphertexts
+CT = {C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>n</sub>}|C<sub>i</sub> = E<sub>P<sub>i</sub></sub>
 (X|H). Verifier sends CT to the prover.
-3. Prover selects the Ci corresponding to his public key. Decrypt it using his secret
+3. Prover selects the C<sub>i</sub> corresponding to his public key. Decrypt it using his secret
 key (Sp) to obtain X and H. Generate H′ = Hash(P). Check if H = H′
 . If not
-terminate the session. Otherwise select a random number y to generate Y = g
-y
+terminate the session. Otherwise select a random number y to generate Y = g<sup>y</sup>
 .
-Then compute K = Xy
-. Prover sends Y back to the verifier encrypted with Pv.
-4. Verifier decrypts Y. Compute K = Y
-x
+Then compute K = X<sup>y</sup>
+. Prover sends Y back to the verifier encrypted with P<sub>v</sub>.
+4. Verifier decrypts Y. Compute K = Y<sup>x</sup>
 . Then generate another random number R,
-generate E1K(R). E1(.) is a symmetric key encryption scheme. Then generate
-H1 = Hash(R|K). Then send E1k(R) and H1 to the prover.
+generate E1<sub>K</sub>(R). E1(.) is a symmetric key encryption scheme. Then generate
+H1 = Hash(R|K). Then send E1<sub>k</sub>(R) and H1 to the prover.
 5. Prover decrypts the message with his knowledge of K to obtain R. Then use R and
 his K to generate H1
 ′ = Hash(R|K). If H1 = H1
@@ -298,9 +292,7 @@ a fail message to the prover.
 #### 4.1.3 Zero Knowledge Proof Based Approach
 #### Setup
 
- 1. P and Q are two large prime number where P-1 |Q.gisageneratorof acyclicgroupofZ
-∗
-P
+ 1. P and Q are two large prime number where P-1 |Q.gisageneratorof acyclicgroupofZ<sup>∗</sup><sub>P</sub>
 where order of the group is Q. P, Q and g are group parameters.
 
 #### Registration
