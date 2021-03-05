@@ -250,9 +250,9 @@ If the prover indeed has a secret key corresponding to any one of the
 public keys in set P, prover can successfully decrypt X. Therefore can
 obtain the correct key (k) for step 5.
 
-K' = X<sup>y</sup>
-K' = (g<sup>x</sup>)<sup>y</sup>
-K' = (g<sub>y</sub>)<sub>x</sub>
+K' = X<sup>y</sup><br>
+K' = (g<sup>x</sup>)<sup>y</sup><br>
+K' = (g<sub>y</sub>)<sub>x</sub><br>
 K' = K
 
 Since prover generate the correct key (K). He can successfully decrypt
@@ -382,8 +382,8 @@ infeasible.
 
 [//]: # " NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS "
 
-- [Project Repository](https://github.com/cepdnaclk/anonymous-authentication)
-- [Project Page](https://cepdnaclk.github.io/anonymous-authentication)
+- [Project Repository](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication)
+- [Project Page](https://cepdnaclk.github.io/e15-4yp-anonymous-authentication)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
