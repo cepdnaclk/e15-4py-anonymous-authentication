@@ -171,8 +171,6 @@ li = <box> {x − x<sub>0</sub>}<over> {x<sub>i</sub> − x<sub>0</sub>} </box> 
 
 f(x) = X t−1 i=0 y<sub>i</sub>l<sub>i</sub>(x)
 
-![equation](http://latex.codecogs.com/gif.latex?li%3D%5Cfrac%7Bx − x<sub>0</sub>%7D%7Bx<sub>i</sub> − x<sub>0</sub>%7D) 
-
 
 The idea of Shamir’s secret sharing is a popular concept in p2p systems. A p2p network does not have an centralized database to store peers’ keys. Storing keys in a selected set of peers might not be a good idea since p2p is a semi-trusted environment. For an example when a peer request a key from another peer, he might not respond. Therefore keys need to be broken into parts and distributed among multiple peers. A peer should be able to reconstruct a key without the knowledge of all the parts. [9], [26] are p2p anonymous authentication mechanisms that use the concept of Shamir’s secret sharing.
 
@@ -237,8 +235,8 @@ private key S<sub>s</sub> to generate Cert<sub>u</sub>. Then sends Cert<sub>u</s
 certificates from the the set. After verifying the authenticity of the selected
 certificates prover generates C = {Cert<sub>1</sub>, Cert<sub>2</sub>, .., Cert<sub>n</sub>} which includes prover’s
 certificate Cert<sub>p</sub> as well. Prover then obtain each corresponding public key from the
-certificates to generate P = {P<sub>1<sub>, P<sub>2<sub>, .., P<sub>n<sub>}. Then send C to the verifier, encrypted
-with verifier’s public key P<sub>v<sub>.
+certificates to generate P = {P<sub>1</sub>, P<sub>2</sub>, .., P<sub>n</sub>}. Then send C to the verifier, encrypted
+with verifier’s public key P<sub>v</sub>.
 2. Verifier decrypts the message to obtain C. After verifying the authenticity of each
 Certi
 , verifier generates each P<sub>i</sub> using main servers public key P<sub>s</sub>. Then generate
@@ -459,10 +457,10 @@ If the prover indeed has a secret key corresponding to any one of the
 public keys in set P, prover can successfully decrypt X. Therefore can
 obtain the correct key (k) for step 5.
 
-    K' = X^y
-    K' = (g<sup>x</sup>)<sup>y</sup>
-    K' = (g<sub>y</sub>)<sub>x</sub>
-    K' = K
+K' = X<sup>y</sup>
+K' = (g<sup>x</sup>)<sup>y</sup>
+K' = (g<sub>y</sub>)<sub>x</sub>
+K' = K
 
 Since prover generate the correct key (K). He can successfully decrypt
 R. Therefore can successfully authenticate himself.
