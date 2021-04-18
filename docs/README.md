@@ -193,10 +193,6 @@ Consider a scenario where a group of k entities where each entity has a public k
 In 1979 Adi Shamir introduced the concept of Shamir’s secret sharing[7][How to Share a Secret]. This allows a secret to be divided into n parts. The secret can be reconstructed with atleast t parts where (1 ≤ t ≤ n). No knowledge about the secret can be learnt with (t-1) parts. The concept is based on polynomial interpolation. The idea is to generate a polynomial f(x) of (t-1) points. First we select (t-1) random positive integers such that (a1, a2, .., at−1). Then set a0 to the secret we want to share. These points are used to generate the polynomial f(x). f(x) = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> + ... + a<sub>t−1</sub>x<sup>t−1</sup> Then we get n points (x<sub>i</sub> , y<sub>i</sub>) corresponding to the polynomial. Given any subset of t points a0 can be found by lagrange basis interpolation. 
 
 li = <box> {x − x<sub>0</sub>}<over> {x<sub>i</sub> − x<sub>0</sub>} </box> /times \frac{x − x<sub>1</sub>} {x<sub>i</sub> − x<sub>1</sub>} \times ... \times \frac{x − x<sub>t−1</sub>} {x<sub>i</sub> − x<sub>t−1</sub>}
- 
-li = <box> {x − x<sub>0</sub>} /frac {x<sub>i</sub> − x<sub>0</sub>} </box>
-
-$$ /frac{n!}{k!(n-k)!}
 
 f(x) = X t−1 i=0 y<sub>i</sub>l<sub>i</sub>(x)
 
@@ -640,6 +636,50 @@ insignificant.
 Modifying the Msg3 will not gain any advantage to M. As mentioned under
 soundness proof, without a valid a<sub>p</sub> authenticating will be
 infeasible.
+
+### 5.2 Performance Testing
+
+#### 5.2.1 Performance of key sharing
+The test was carried out by increasing the number of parts the key is broken into and
+measuring the latency of successful key reconstruction.
+
+#### 5.2.2 Performance of authentication protocols
+The test was carried out by increasing the number of keys used in the authentication
+process and measuring the latency of a successful authentication process. The test was
+carried out separately for the three authentication protocols in similar environments.
+
+### 5.3 Performance Analysis
+According to Fig. 5.1, the latency of the key reconstruction exponentially increases
+with an increasing number of key parts. The maximum number of possible parts per
+key without increasing a threshold of 5 seconds is 20. The reason for such exponential
+increment is due to the linear distribution of unique keys. That is to request the mth part
+of the key, the request needs to travel through m supernodes. Increasing the number of
+parts per key will increase the overall distance the request message has to travel through.
+Increasing the number of key parts increases the overall latency of the authentication
+process. The higher the parts the key is broken to, the higher the availability of the keys.
+Therefore need to understand the optimal trade-off between the availability of keys and
+the latency of the key reconstruction process.
+
+It is also important to notice that the network congestion at the time of the experiment,
+the physical location of super-nodes, the performance of the super-nodes can have an
+effect on the results. Nonetheless, the experiment is still essential to get an overall idea
+of the performance of the key reconstruction mechanism.
+
+Fig 5.2 compare the performance of the three authentication protocols with respect
+to time. The latency of the authenticated key sharing based approach and the ring
+signature-based approach increases with the increasing number of keys. However, the
+latency of the zero-knowledge proof-based approach remains constant. The reason is the
+encryption and decryption steps of the first two protocols. Higher the number of keys,
+the higher the number of encryptions and decryptions the protocol has to done. The
+zero-knowledge proof-based approach has no explicit encryption and decryption steps.
+Thus it is faster and no visible increment in the latency with the increasing number of
+keys compared to the other two approaches.
+
+Higher the number of keys used in the authentication process higher the anonymity.
+Since the zero-knowledge proof-based approach can increase the number of keys used
+in the protocol without increasing the latency of the authentication process it is more
+efficient compared to the other two protocols.
+
 
 ## Conclusions and Future Works
 
