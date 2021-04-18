@@ -383,11 +383,31 @@ Testing of the system was done to understand the capabilities of the system. The
 Key sharing technique is an integral part of our implementation. The number of parts the key can be broken into (n) and the number of parts required to reconstruct a certificate (r) decides the availability of certificates. A high n value and low r value obtains a higher availability. Since distributing the parts of the certificates happens only once, in this experiment we measure the latency of the certificate reconstruction. Specifically, the experiment was done to identify how the latency of a successful certificate reconstruction varies with increasing n and r. The experiment was done by setting n = r. That is all parts of the certificate are required to reconstruct the certificate. First we break a randomly created certificate into n parts and distribute across the P2P network. Then we floods a SEARCH message requesting the parts of the certificate. The time was measured from the time of flooding the SEARCH message until the successful reconstruction of the certificate. We started with breaking the certificate into 2 parts and at each step we increased n by 2. We continued the experiment until n reached 20. For each n the experiment was done three times and we measured the average time. We also removed any outliers that could affect the results. Due to limited resources, we used only four publicly available servers each in a different country. The selected servers were located in Singapore, India, America and France. Multiple super-node instances were created at each server and super-nodes 20 were connected so that no two neighbour-nodes reside in the same country. This is to intentionally increase the latency of communication. 
 
 #### 4.2.2 Performance of authentication protocols 
-Anonymity of the authentication protocols depend on the number of certificates. Higher the number of certificates used in the protocol higher the anonymity of the prover. Therefore it is important that a protocol can handle a higher number of certificates. This experiment was done to measure the latency of a complete successful authentication session between a prover and a verifier. At each step we increased the number of ceritificates used in the protocol to measure how the latency varies. The experiment was done for the three proposed protocols in hope to compare the performance.
+The anonymity of the authentication protocols depends on the number of certificates.
+Higher the number of certificates used in the protocol higher the anonymity of the prover.
+Therefore it is important that a protocol can handle a higher number of certificates. This
+experiment was done to measure the latency of a complete successful authentication
+session between a prover and a verifier. At each step, we increased the number of
+certificates used in the protocol to measure how the latency varies. The experiment was
+done for the three proposed protocols in the hope to compare the performance. The time
+was measured from moment that the prover received the requested keys and successful
+finish the authentication protocol at the verifier’s side. The experiment was started using
+only 10 keys and at each step, we increased the number of keys by 10. The experiment
+was carried out until 200 keys are used in the authentication protocols. Similar to the
+previous test, the experiment was done three times and we measured the average time.
+We also removed any outliers that could affect the results.
+
+Due to limited resources, we used only four publicly available servers each in a
+different country. The selected servers were located in Singapore, India, America and
+France. Multiple super-node instances were created at each server and super-nodes
+were connected so that no two neighbour-nodes reside in the same country. This is to
+intentionally increase the latency of communication.
 
 ## Results and Analysis
 
-### Ring Signature Based approach
+### 5.1 Proofs of security
+
+#### 5.1.1 Ring Signature Based approach
 
 The security of the protocol depends on the security of the ring
 signature scheme[40]. The authors have proven the correctness,
@@ -447,7 +467,7 @@ himself. Replaying Msg3 will not gain anything unless verifier generates
 the same N as the original authentication. Probability of this scenario
 is 1/N, which can be reduced by increasing the domain of N.
 
-### Authenticated key sharing based approach
+####  5.1.2 Authenticated key sharing based approach
 
 #### Anonymity
 
@@ -537,7 +557,7 @@ attack is if the verifier generate the same R as the original
 authentication. Then M can replay Msg5 to successfully authenticate
 himself as a valid prover.
 
-### Zero Knowledge Proof Based Approach
+#### 5.1.3 Zero Knowledge Proof Based Approach
 
 #### Anonymity
 
@@ -612,7 +632,26 @@ Modifying the Msg3 will not gain any advantage to M. As mentioned under
 soundness proof, without a valid a<sub>p</sub> authenticating will be
 infeasible.
 
-## Conclusion
+## Conclusions and Future Works
+
+We have proposed three novel protocols to achieve anonymous authentication in peer to
+peer networks. The ring signature-based approach provides a suggestion of how to utilized
+already implemented ring signatures to obtain anonymous authentication. Then we propose an 
+authentication method that utilizes a key sharing mechanism. This method does
+not provide zero-knowledge. That is a verifier can obtain some knowledge of the prover
+identity. To solve this we introduce a zero-knowledge proof-based approach that utilizes
+Schnorr’s protocol to achieve anonymous authentication. This method is more efficient,
+secure and most importantly achieve zero knowledge. We have proven the security of each
+protocol including anonymity, completeness, soundness, resilience to impersonation and
+resilience to replay attacks. The protocols were tested in a peer to peer overlay network
+build using the .Net framework. The peer to peer network utilizes a distributed certificate 
+management mechanism build using Shamir’s secret sharing algorithm. This allows
+us to access certificates in a more efficient manner compared to the traditional approaches.
+
+As for future works, we hope to modify the zero-knowledge proof-based approach for
+certificate revocation. That is, give an authoritative entity the privilege to revoke the
+anonymity of a user when required. We also hope to integrate the proposed authentication
+protocols in real-world peer to peer transactions.
 
 ## Publications
 
