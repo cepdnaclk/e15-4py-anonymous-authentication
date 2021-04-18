@@ -59,6 +59,7 @@ We deploy these protocol in a P2P environment where certificates are managed by 
 ## Related works
 
 ### 2.1 Authentication in P2P
+
 Absence of a central server makes authentication in peer to peer (P2P) networks complex.
 Traditional cryptographic principles like Public Key Infrastructure (PKI) or Identity
 based Public Key Certificates (ID-PKC) are based on a trusted third party. Establishing
