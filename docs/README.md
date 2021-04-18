@@ -655,6 +655,11 @@ infeasible.
 The test was carried out by increasing the number of parts the key is broken into and
 measuring the latency of successful key reconstruction.
 
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+
 #### 5.2.2 Performance of authentication protocols
 The test was carried out by increasing the number of keys used in the authentication
 process and measuring the latency of a successful authentication process. The test was
