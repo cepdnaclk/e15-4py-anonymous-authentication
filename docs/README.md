@@ -319,10 +319,7 @@ Then compute K = X<sup>y</sup>
 generate E1<sub>K</sub>(R). E1(.) is a symmetric key encryption scheme. Then generate
 H1 = Hash(R|K). Then send E1<sub>k</sub>(R) and H1 to the prover.
 5. Prover decrypts the message with his knowledge of K to obtain R. Then use R and
-his K to generate H1
-′ = Hash(R|K). If H1 = H1
-′
-, prover sends R back to the
+his K to generate H1′ = Hash(R|K). If H1 = H1′ , prover sends R back to the
 verifier. Otherwise terminate the authentication session.
 6. Authentication is successful if the verifier obtains the same R. If not verifier sends
 a fail message to the prover.
