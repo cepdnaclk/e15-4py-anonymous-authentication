@@ -704,7 +704,7 @@ Table 5.2 Latency of the authentication protocols with increasing number of keys
 
 ![graph](https://user-images.githubusercontent.com/76469306/115150042-49d8bc00-a084-11eb-98c6-53625201f8f0.PNG)
 
-
+Fig. 5.2 Performance comparison of the three authentication protocols
 
 ### 5.3 Performance Analysis
 According to Fig. 5.1, the latency of the key reconstruction exponentially increases
