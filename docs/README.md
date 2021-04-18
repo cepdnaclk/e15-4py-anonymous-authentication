@@ -196,7 +196,7 @@ li = <box> {x − x<sub>0</sub>}<over> {x<sub>i</sub> − x<sub>0</sub>} </box> 
  
 li = <box> {x − x<sub>0</sub>} /frac {x<sub>i</sub> − x<sub>0</sub>} </box>
 
-\frac{n!}{k!(n-k)!}
+/frac{n!}{k!(n-k)!}
 
 f(x) = X t−1 i=0 y<sub>i</sub>l<sub>i</sub>(x)
 
