@@ -708,14 +708,13 @@ protocols in real-world peer to peer transactions.
 2. [Semester 7 slides](./)
 3. [Semester 8 report](./)
 4. [Semester 8 slides](./)
-5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./).
 
 ## Links
 
 [//]: # " NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS "
 
-- [Project Repository](https://github.com/cepdnaclk/anonymous-authentication)
-- [Project Page](https://cepdnaclk.github.io/anonymous-authentication)
+- [Project Repository](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication)
+- [Project Page](https://cepdnaclk.github.io/e15-4yp-anonymous-authentication/)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
