@@ -35,6 +35,18 @@ title: Anonymous and Distributed Authentication for Peer to Peer Networks
 
 ## Abstract
 
+The traditional authentication mechanisms like PKI and ID-PKC are difficult to integrate
+with a P2P like decentralized network environment. This task becomes even more difficult
+in an anonymous P2P environment. This research proposes three novel authentication
+protocols such that users can authenticate themselves in an anonymous P2P network
+without revealing his/her identity. First, we suggest a way to use existing ring signature
+schemes to obtain anonymous authentication. Then we propose an anonymous authentication scheme utilizing secret sharing schemes. Finally, we propose a zero-knowledge
+proof based anonymous authentication protocol. We provide security proofs of the three
+protocols including anonymity, completeness, soundness, resilience to impersonation and
+resilient to replay attacks. Then we compare the performance of the new protocols. We
+deploy these protocols in a P2P environment build using the .Net framework. We utilize
+Shamir’s secret sharing algorithm to manage certificates in the distributed environment.
+
 ## Introduction
 
 The concept of Peer to peer (P2P) communication has gained significant attention in the network community over the years. Since the release of Napster in 1998 many P2P applications have been introduced. Bitcoin[1], BitTorrent, TOR[2], Freenet[3], etc are some of the more popular P2P applications. The absence of centralized authority is the main reason behind the popularity of P2P applications. This eliminates the need for an expensive central server. Also removes the vulnerability of a single point of failure. P2P networks are considered to be more efficient and scalable than traditional client-server applications. 
@@ -704,17 +716,18 @@ protocols in real-world peer to peer transactions.
 
 ## Publications
 
-1. [Semester 7 report](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%207%20report.pdf)
-2. [Semester 7 slides](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%207%20slides.pdf)
-3. [Semester 8 report](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%208%20report.pdf)
-4. [Semester 8 slides](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%208%20slides.pdf)
+1. [Semester 7 report](./)
+2. [Semester 7 slides](./)
+3. [Semester 8 report](./)
+4. [Semester 8 slides](./)
+5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./).
 
 ## Links
 
 [//]: # " NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS "
 
-- [Project Repository](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication)
-- [Project Page](https://cepdnaclk.github.io/e15-4yp-anonymous-authentication/)
+- [Project Repository](https://github.com/cepdnaclk/anonymous-authentication)
+- [Project Page](https://cepdnaclk.github.io/anonymous-authentication)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
