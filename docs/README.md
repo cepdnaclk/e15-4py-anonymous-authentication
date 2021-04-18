@@ -68,9 +68,11 @@ P2P networks propose trust and reputation management schemes to solve this probl
 ,[9], [10] use trust and reputation schemes to discover peers that can be considered as
 trusted peers of the network. These trusted peers are used in authentication as trusted
 third parties.
+
 The idea of reputation management systems is to evaluate a peer’s trustworthiness
 based on its interactions with other peers. There exist plenty of research in this area;
 EigenTurst [11], NICE[12], Regret [13], PeerTurst[14], FuzzyTrust [15].
+
 P2P systems that use reputation managements schemes to assist in authentication
 suffer from an obvious flow. These schemes assume that the reputation system is intelligent
 enough not to select malicious users as trusted peers. Trusting malicious peers to protect
@@ -85,10 +87,12 @@ Some researches suggest using a modified PKI for authentication in P2P networks
 [16], [17]. Rather than having a single centralized authority, the responsibility of the
 Certificate Authority (CA) is distributed across multiple peers in the network. This
 improves the scalability and robustness of the authentication process.
+
 The downside of using PKI in P2P is certificate management becomes complex. The
 authentication process becomes difficult to implement effectively. [17] use a set of peers as
 Authentication Servers (ASs). Even though this improves the scalability of the network,
 introduce new security risks like unreliability in certificate access and verification.
+
 To solve the problem of the absence of a centralized authority and at the same
 time keep the authentication process reliable, modern authentication schemes utilize
 blockchain technology. There is a lot of literature that proposes the idea of using
@@ -99,9 +103,11 @@ Therefore can successfully solve the problems of malicious CAs, MITM attacks and
 point of failure. Blockchain is used as a distributed key-value data storage. The data
 is public and readable to everyone.[22] propose the idea of using smart contracts to
 certificate management.
+
 The DPKI is only secure as long as honest nodes control collectively more than 51%
 of computing power. Also some argues the need of blockchain to decentralized PKI since
 the technology of blockchain is still new to the industry.
+
 The PGP Web of Trust [23] is another way to navigate the problem of not having a
 trusted central authority. WoT distribute the responsibility of a CA among users. The
 core concept of WoT is trust chains. For a simpler explanation, assume A wants to
@@ -113,6 +119,7 @@ suitable P2P networks since, it is difficult for a new peer to join the network 
 personally knowing a existing user of the network.
 
 ### 2.2 Anonymous Authentication in P2P
+
 The concept of anonymous authentication has been around for sometime. Pseudo
 Trust[24] has been one of the more popular publications of this topic. Pseudo Trust
 (PT) utilize the concept of double pseudonyms combine with zero knowledge proofs to
@@ -124,9 +131,11 @@ PT does not change PI (pseudo identity) prior to each authentication process. Th
 protocol requires PIC (certificate of pseudo identity) to be send to the other party to
 start the authentication. Since PIC is same for a user, an eavesdropper can link two
 communication sessions to a specific user.
+
 [25] proposes an similar authentication scheme to PT for Internet of Vehicles (IoV).
 The only difference is the slight change of the zero knowledge proof and absence of onion
 routing the trust management. This also suffers from the same vulnerabilities as PT.
+
 [10] present an interesting approach to anonymous authentication. PPAA uses tags
 to obtain anonymity and at the same time link communication sessions. The idea is
 to use IDs of the two parties involved in the communication session create a tag. The
@@ -136,10 +145,12 @@ parties PPAA propose to include an event id into the tag design. Therefore only 
 involved in the communication will be able to link a communication session to a previous
 session with the same party. The PPAA is secure in random oracle model if eXternal
 Diffie-Hellmam (XDH) and q-SDH assumption holds.
+
 CST[9] uses collaboration signature to authenticate users anonymously. As mentioned
 in section 2.1 CST uses EigenTrust[11] reputation system to select trusted peers (RPs).
 This is not safe in a semi-trusted environment like P2P networks. Other than that CST
 is said to be resilient against impersonate attacks, traceability and collaboration attacks.
+
 [26] presents a similar method as CST. They use FBST[27][Fair Blind Signatures] to
 present novel authentication scheme that keep the anonymity of honest users. Similar to
 CST this uses a trust management system called SOBIE to elect peers as super peers
@@ -153,6 +164,7 @@ a way to break a key and store it in multiple places and recreate the key when r
 among multiple RPs. Therefore even if few RPs got compromise it does not reveal user’s
 identity. Also a user use anonymous multicast to communicate with a SP. This makes it
 impossible for a SP to reveal an identity of a user.
+
 [28] uses an combination of Merkle’s puzzles[29] and zero knowledge proofs to provide
 anonymous authentication.
 
