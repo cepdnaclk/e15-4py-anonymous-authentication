@@ -676,8 +676,7 @@ The test was carried out by increasing the number of keys used in the authentica
 process and measuring the latency of a successful authentication process. The test was
 carried out separately for the three authentication protocols in similar environments.
 
-| Number of parts per key     | Latency in Authenticated key sharing based approach (ms) | Latency in Zero knowledge proof based approach (ms)| Latency in Ring signature based
-approach (ms) | 
+| Number of parts per key| Latency in Authenticated key sharing based approach (ms) | Latency in Zero knowledge proof based approach (ms)| Latency in Ring signature based approach (ms) |
 | :----:     |    :----:   |  :----:     |    :----:   |         
 | 10      | 82.00      | 58.33     |98.67     | 
 | 20      |87.00       | 56.33    |107.00      | 
