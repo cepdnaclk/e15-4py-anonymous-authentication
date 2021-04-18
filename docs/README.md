@@ -704,10 +704,10 @@ protocols in real-world peer to peer transactions.
 
 ## Publications
 
-1. [Semester 7 report](./)
-2. [Semester 7 slides](./)
-3. [Semester 8 report](./)
-4. [Semester 8 slides](./)
+1. [Semester 7 report](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%207%20report.pdf)
+2. [Semester 7 slides](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%207%20slides.pdf)
+3. [Semester 8 report](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%208%20report.pdf)
+4. [Semester 8 slides](https://github.com/cepdnaclk/e15-4yp-anonymous-authentication/blob/main/docs/data/Semester%208%20slides.pdf)
 
 ## Links
 
