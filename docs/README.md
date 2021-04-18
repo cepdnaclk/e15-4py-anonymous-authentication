@@ -668,11 +668,39 @@ measuring the latency of successful key reconstruction.
 | 18      | 1404.40       | 
 | 20      | 1404.40      | 
 
+Table 5.1 Latency of the key reconstruction with increasing number of parts per key
+
 
 #### 5.2.2 Performance of authentication protocols
 The test was carried out by increasing the number of keys used in the authentication
 process and measuring the latency of a successful authentication process. The test was
 carried out separately for the three authentication protocols in similar environments.
+
+| Number of parts per key     | Latency in Authenticated key sharing based approach (ms) | Latency in Zero knowledge proof based approach (ms)| Latency in Ring signature based
+approach (ms) | 
+| :----:     |    :----:   |  :----:     |    :----:   |         
+| 10      | 82.00      | 58.33     |98.67     | 
+| 20      |87.00       | 56.33    |107.00      | 
+| 30      | 88.00        | 62.00      |104.00       | 
+| 40      | 89.33        |  80.00      | 106.67      | 
+| 50      |99.67       | 58.00      | 114.67       | 
+| 60      | 99.67        |  56.33     |109.33     | 
+| 70     | 105.00      |  58.67      | 119.67       | 
+| 80      | 111.33      | 68.33     | 121.33       | 
+| 90      | 112.67       |  63.67      | 127.33       | 
+| 100      | 116.00      | 57.67      |120.67       | 
+| 110      |105.33       | 59.33      | 124.33       | 
+| 120      | 115.00       | 64.33      | 127.33      | 
+| 130      | 119.67        |  55.67      | 142.67      | 
+| 140      | 124.67       | 58.67     |144.33       | 
+| 150      | 127.33       | 56.33     | 144.67      | 
+| 160     | 113.33      |  67.33      |138.67      | 
+| 170      | 134.33      |58.67    | 140.00       | 
+| 180      | 128.00       |  58.33      | 144.00      | 
+| 190      | 125.67    |  56.00      | 142.00      | 
+| 200      |133.00      | 63.33     | 144.00       |
+
+Table 5.2 Latency of the authentication protocols with increasing number of keys.
 
 ### 5.3 Performance Analysis
 According to Fig. 5.1, the latency of the key reconstruction exponentially increases
