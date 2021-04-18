@@ -518,7 +518,7 @@ K' = X<sup>y</sup>
 
 K' = (g<sup>x</sup>)<sup>y</sup>
 
-K' = (g<sub>y</sub>)<sub>x</sub>
+K' = (g<sup>y</sup>)<sup>x</sup>
 
 K' = K
 
