@@ -515,8 +515,11 @@ public keys in set P, prover can successfully decrypt X. Therefore can
 obtain the correct key (k) for step 5.
 
 K' = X<sup>y</sup>
+
 K' = (g<sup>x</sup>)<sup>y</sup>
+
 K' = (g<sub>y</sub>)<sub>x</sub>
+
 K' = K
 
 Since prover generate the correct key (K). He can successfully decrypt
